@@ -35,22 +35,30 @@ if (form) {
     const data = new FormData(form);
     const name = String(data.get('name') || '').trim();
     const email = String(data.get('email') || '').trim();
+    const phone = String(data.get('phone') || '').trim();
+    const platform = String(data.get('platform') || '').trim();
+    const type = String(data.get('request-type') || '').trim();
     const subject = String(data.get('subject') || '').trim();
     const message = String(data.get('message') || '').trim();
 
     if (!name || !email || !subject || !message) {
-      if (formNote) formNote.textContent = 'Merci de remplir tous les champs avant l\'envoi.';
+      if (formNote) formNote.textContent = 'Merci de remplir tous les champs obligatoires.';
       return;
     }
 
     const body = [
       `Nom: ${name}`,
       `Email: ${email}`,
+      phone ? `Téléphone: ${phone}` : '',
+      platform ? `Plateforme: ${platform}` : '',
+      type ? `Type: ${type}` : '',
       '',
       message
-    ].join('\n');
+    ].filter(Boolean).join('\r\n');
 
     const mailto = `mailto:contact@synkora-group.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
+    const link = document.createElement('a');
+    link.href = mailto;
+    link.click();
   });
 }
