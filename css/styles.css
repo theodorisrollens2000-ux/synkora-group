@@ -1003,7 +1003,66 @@ h3 { font-size: 1.3rem; }
   color: var(--slate);
 }
 
-/* Activity poles and partner blocks on the homepage. */
+/* Team photo placeholders, activity poles and partner blocks on the homepage. */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.team-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px 14px;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+}
+
+.team-photo {
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 92px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  background:
+    linear-gradient(135deg, rgba(15, 155, 154, .16), rgba(242, 184, 75, .18)),
+    var(--surface-soft);
+  border: 1px solid rgba(15, 155, 154, .26);
+  color: var(--teal);
+}
+
+.team-photo svg {
+  width: 54px;
+  height: 54px;
+}
+
+.team-card h3 {
+  font-size: .95rem;
+}
+
+.team-role {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 3px 8px;
+  border-radius: var(--radius);
+  background: rgba(15, 155, 154, .10);
+  color: var(--teal);
+  font-size: .68rem;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.team-card p {
+  color: var(--slate);
+  margin: 10px 0 0;
+  font-size: .82rem;
+  line-height: 1.45;
+}
+
 .poles-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -2050,6 +2109,7 @@ h3 { font-size: 1.3rem; }
   .ops-grid { grid-template-columns: repeat(2, 1fr); }
   .architecture-map,
   .architecture-split { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: repeat(3, 1fr); }
   .poles-grid { grid-template-columns: repeat(3, 1fr); }
   .partners-grid { grid-template-columns: repeat(2, 1fr); }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -2112,6 +2172,7 @@ h3 { font-size: 1.3rem; }
   .role-grid,
   .blueprint-grid,
   .ops-grid,
+  .team-grid,
   .poles-grid,
   .stats-grid,
   .partners-grid,
