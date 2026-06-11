@@ -289,6 +289,11 @@ if (form) {
 /* PWA registration is skipped from file:// so local static previews keep working. */
 if ('serviceWorker' in navigator && location.protocol !== 'file:') {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('service-worker.js').catch(() => {});
+    const workerUrl = new URL(
+      location.pathname.includes('/pages/') ? '../service-worker.js' : 'service-worker.js',
+      location.href
+    );
+
+    navigator.serviceWorker.register(workerUrl.href).catch(() => {});
   });
 }

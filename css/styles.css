@@ -1013,60 +1013,7 @@ h3 { font-size: 1.3rem; }
   color: var(--slate);
 }
 
-/* Team, activity poles and partner blocks on the homepage. */
-.team-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
-}
-
-.team-card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 22px;
-  box-shadow: var(--shadow-soft);
-  text-align: center;
-}
-
-.team-avatar {
-  width: 88px;
-  height: 88px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin: 0 auto 14px;
-  border: 3px solid var(--teal);
-}
-
-.team-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.team-card h3 { font-size: 1.02rem; }
-
-.team-role {
-  display: inline-block;
-  margin-top: 6px;
-  font-size: .78rem;
-  font-weight: 850;
-  color: var(--teal);
-  text-transform: uppercase;
-  letter-spacing: 0;
-}
-
-.team-card p {
-  color: var(--slate);
-  margin: 10px 0 0;
-  font-size: .88rem;
-}
-
-.poles-heading {
-  margin-top: 72px;
-  margin-bottom: 24px;
-}
-
+/* Activity poles and partner blocks on the homepage. */
 .poles-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -1899,10 +1846,6 @@ h3 { font-size: 1.3rem; }
 }
 
 .contact-info p { color: var(--slate); }
-.contact-link {
-  color: var(--teal);
-  font-weight: 800;
-}
 
 .contact-cards {
   display: grid;
@@ -2117,7 +2060,6 @@ h3 { font-size: 1.3rem; }
   .ops-grid { grid-template-columns: repeat(2, 1fr); }
   .architecture-map,
   .architecture-split { grid-template-columns: 1fr; }
-  .team-grid { grid-template-columns: repeat(2, 1fr); }
   .poles-grid { grid-template-columns: repeat(3, 1fr); }
   .partners-grid { grid-template-columns: repeat(2, 1fr); }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -2180,17 +2122,16 @@ h3 { font-size: 1.3rem; }
   .role-grid,
   .blueprint-grid,
   .ops-grid,
-  .team-grid,
   .poles-grid,
-	  .stats-grid,
-	  .partners-grid,
-	  .blog-grid,
-	  .roadmap-grid,
-	  .values-grid,
-	  .platform-feature-grid,
-	  .platform-roadmap {
-	    grid-template-columns: 1fr;
-	  }
+  .stats-grid,
+  .partners-grid,
+  .blog-grid,
+  .roadmap-grid,
+  .values-grid,
+  .platform-feature-grid,
+  .platform-roadmap {
+    grid-template-columns: 1fr;
+  }
   .platform-hero { padding: 72px 0 48px; }
   .platform-hero h1 { font-size: clamp(2.55rem, 15vw, 4rem); }
   .platform-hero .lead { font-size: 1rem; }
@@ -2217,12 +2158,11 @@ h3 { font-size: 1.3rem; }
     text-align: center;
     padding: 20px;
   }
-	  .poles-heading { margin-top: 48px; }
-	  .activity-item { grid-template-columns: 1fr; }
-	  .contact-name-grid,
-	  .contact-form > div { grid-template-columns: 1fr !important; }
-	  .footer-inner {
-	    align-items: flex-start;
+  .activity-item { grid-template-columns: 1fr; }
+  .contact-name-grid,
+  .contact-form > div { grid-template-columns: 1fr !important; }
+  .footer-inner {
+    align-items: flex-start;
     flex-direction: column;
     padding: 28px 0;
   }

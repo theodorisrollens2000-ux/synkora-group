@@ -2,7 +2,7 @@
   "name": "Synkora Group",
   "short_name": "Synkora",
   "description": "Ecosysteme digital multi-plateformes pour creer, connecter et developper.",
-  "id": "/",
+  "id": "https://theodorisrollens2000-ux.github.io/synkora-group/",
   "lang": "fr",
   "dir": "ltr",
   "start_url": "./?source=pwa",

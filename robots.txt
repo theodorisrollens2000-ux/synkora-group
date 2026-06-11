@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://theodorisrollens2000-ux.github.io/synkora-group/sitemap.xml
