@@ -21,7 +21,7 @@ Ouvrir `index.html` dans un navigateur ou lancer un serveur statique local.
 - Accueil
 - Plateformes : BuildSync AI, BizPocket, Devis BTP, StudyNK, Lodpam, futurs projets
 - Activités
-- Pôles
+- Équipe & pôles
 - Direction produit
 - Actualités
 - Contact
