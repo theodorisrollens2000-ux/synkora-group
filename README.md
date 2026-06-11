@@ -7,7 +7,7 @@ Ce dossier contient le site vitrine statique de Synkora Group, publié sur GitHu
 - `index.html` : page principale du site.
 - `css/styles.css` : design, responsive et charte visuelle.
 - `js/app.js` : menu mobile, animations légères et formulaire email.
-- `assets/` : logo SVG, favicon, icônes PWA et logo PNG.
+- `assets/` : symbole SVG, favicon, icônes PWA et logo PNG pour le partage social.
 - `site.webmanifest`, `service-worker.js`, `offline.html` : base PWA.
 - `robots.txt`, `sitemap.xml` : indexation et référencement.
 - `docs/cahier-des-charges-synkora-group.docx` : cahier des charges éditable.

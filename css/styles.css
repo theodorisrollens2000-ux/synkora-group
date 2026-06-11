@@ -524,16 +524,6 @@ h3 { font-size: 1.3rem; }
   max-width: 440px;
 }
 
-.orbit { position: relative; width: min(390px, 100%); aspect-ratio: 1; margin: 0 auto 26px; display: grid; place-items: center; }
-.orbit::before, .orbit::after { content: ""; position: absolute; inset: 20px; border: 1.5px solid rgba(15,155,154,.28); border-radius: 50%; }
-.orbit::after { inset: 58px; border-color: rgba(242,184,75,.36); transform: rotate(20deg); }
-.orbit img { width: 180px; z-index: 2; filter: drop-shadow(0 16px 24px rgba(17,24,39,.10)); }
-.node { position: absolute; display: grid; place-items: center; z-index: 3; width: 74px; height: 74px; border-radius: 50%; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow-soft); color: var(--navy); font-weight: 900; }
-.node-1 { top: 10px; right: 54px; color: var(--teal); }
-.node-2 { right: 4px; bottom: 100px; color: var(--gold); }
-.node-3 { left: 4px; bottom: 95px; }
-.node-4 { left: 48px; top: 28px; }
-
 /* Homepage proof stats and product direction cards. */
 .stats {
   background: #111827;
