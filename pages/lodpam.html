@@ -6,75 +6,183 @@
   <title>Lodpam - Synkora Group</title>
   <meta name="description" content="Plateforme ouverte du groupe Synkora : services, marketplace, communauté ou solution métier." />
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+  <link rel="manifest" href="../site.webmanifest" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'" />
   <meta name="theme-color" content="#061b3a" />
-  <link rel="stylesheet" href="../css/styles.css" />
+  <meta name="color-scheme" content="light dark" />
+  <script>
+    (() => {
+      try {
+        const storedTheme = localStorage.getItem('synkora-theme');
+        const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = storedTheme || preferredTheme;
+      } catch (error) {
+        document.documentElement.dataset.theme = 'light';
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="../css/styles.css?v=20260610f" />
 </head>
 <body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
   <header class="site-header" data-header>
     <div class="container header-inner">
       <a class="brand" href="../index.html" aria-label="Synkora Group - Accueil">
         <img src="../assets/logo-mark.svg" alt="" class="brand-mark" fetchpriority="high" />
         <span class="brand-text"><strong>SYNKORA</strong><small>GROUP</small></span>
       </a>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
-        <span></span><span></span><span></span>
-        <span class="sr-only">Ouvrir le menu</span>
-      </button>
-      <nav id="site-nav" class="site-nav" data-nav>
-        <a href="../index.html#ecosysteme">Plateformes</a>
-        <a href="../index.html#activites">Activités</a>
-        <a href="../index.html#equipes">Équipe</a>
-        <a href="../pages/apropos.html">À propos</a>
-        <a href="../index.html#contact">Contact</a>
-      </nav>
+
+      <div class="header-actions">
+        <nav id="site-nav" class="site-nav" data-nav>
+          <a href="../index.html#ecosysteme">Plateformes</a>
+          <a href="../index.html#activites">Activités</a>
+          <a href="../index.html#architecture">Direction</a>
+          <a href="../index.html#equipes">Équipe</a>
+          <a href="apropos.html">À propos</a>
+          <a href="../index.html#contact">Contact</a>
+        </nav>
+
+        <button class="theme-toggle" type="button" aria-label="Activer le mode sombre" data-theme-toggle>
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.42-1.42M3.63 20.37l1.42-1.42m0-13.9L3.63 3.63m16.74 16.74-1.42-1.42M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />
+          </svg>
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 14.4A8.2 8.2 0 0 1 9.6 3 8.7 8.7 0 1 0 21 14.4Z" />
+          </svg>
+        </button>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+          <span></span><span></span><span></span>
+          <span class="sr-only">Ouvrir le menu</span>
+        </button>
+      </div>
     </div>
   </header>
 
-  <main>
-    <section class="section platform-hero" style="background: linear-gradient(135deg, #061b3a 0%, #627084 50%, #8a9aa8 100%); color: white;">
-      <div class="container" style="text-align: center;">
-        <p class="eyebrow" style="color: rgba(255,255,255,.6);">Plateforme du groupe</p>
-        <h1 style="color: white; font-size: clamp(48px, 6vw, 72px);">Lodpam</h1>
-        <p style="font-size: 21px; color: rgba(255,255,255,.8); max-width: 640px; margin: 20px auto 0;">Un projet ouvert à définir selon la stratégie du groupe : service, marketplace, communauté ou solution métier.</p>
-        <div style="display: flex; gap: 14px; justify-content: center; margin-top: 32px; flex-wrap: wrap;">
-          <span class="tag" style="background: rgba(255,255,255,.15); color: white; border: 1px solid rgba(255,255,255,.2);">Plateforme ouverte</span>
-          <span class="tag" style="background: rgba(255,255,255,.15); color: white; border: 1px solid rgba(255,255,255,.2);">À définir</span>
+  <main id="main" class="platform-page platform-lodpam">
+    <!-- PLATFORM HERO -->
+    <section class="platform-hero">
+      <div class="container platform-hero-grid">
+        <div>
+          <p class="platform-breadcrumb"><a href="../index.html#ecosysteme">Plateformes</a><span>/</span><span>Lodpam</span></p>
+          <p class="eyebrow">Plateforme ouverte</p>
+          <h1>Lodpam</h1>
+          <p class="lead">Un espace d'exploration pour une future plateforme Synkora: marketplace, service métier, communauté ou outil collaboratif.</p>
+          <div class="platform-pill-row">
+            <span class="platform-pill">Exploration</span>
+            <span class="platform-pill">Marketplace</span>
+            <span class="platform-pill">Services</span>
+            <span class="platform-pill">Communauté</span>
+            <span class="platform-pill">App séparée</span>
+          </div>
+          <div class="platform-actions">
+            <!-- FUTURE APP LINK: replace href with the external Lodpam app URL when ready. -->
+            <a class="btn btn-primary" href="../index.html#contact" data-platform-app-link="lodpam">Accès futur à l'app</a>
+            <a class="btn btn-secondary" href="../index.html#architecture">Voir la direction</a>
+          </div>
+        </div>
+
+        <aside class="platform-signal-panel" aria-label="Synthèse Lodpam">
+          <div class="platform-signal-top">
+            <span class="platform-mark">LP</span>
+            <span class="platform-status">En réflexion</span>
+          </div>
+          <h2>Un espace gardé ouvert pour le bon signal.</h2>
+          <p>Lodpam sert à capter les pistes fortes avant de figer un produit: besoin marché, audience, modèle et valeur concrète.</p>
+          <div class="platform-signal-metrics">
+            <div><strong>Open</strong><span>Orientation flexible</span></div>
+            <div><strong>Test</strong><span>Validation terrain</span></div>
+            <div><strong>Fit</strong><span>Produit à définir</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- PROBLEM, FEATURES AND AUDIENCE -->
+    <section class="platform-section">
+      <div class="container platform-layout">
+        <div class="platform-main-stack">
+          <section class="platform-block">
+            <p class="eyebrow">Intention</p>
+            <h2>Ne pas lancer une plateforme avant d'avoir un vrai besoin.</h2>
+            <p>Lodpam reste volontairement ouvert. L'objectif est d'identifier une opportunité solide avant de choisir entre marketplace, service spécialisé, communauté professionnelle ou outil métier.</p>
+          </section>
+
+          <section class="platform-block">
+            <div class="platform-section-heading">
+              <div>
+                <p class="eyebrow">Pistes</p>
+                <h2>Directions possibles.</h2>
+              </div>
+            </div>
+            <div class="platform-feature-grid">
+              <article class="platform-feature-card"><span>01</span><h3>Marketplace</h3><p>Mettre en relation offres, demandes, prestataires ou services ciblés.</p></article>
+              <article class="platform-feature-card"><span>02</span><h3>Service métier</h3><p>Construire un outil spécialisé autour d'un problème opérationnel précis.</p></article>
+              <article class="platform-feature-card"><span>03</span><h3>Communauté</h3><p>Réunir des profils autour d'un sujet utile, avec contenus et interactions.</p></article>
+              <article class="platform-feature-card"><span>04</span><h3>Espace documents</h3><p>Stockage, partage, validation et suivi de documents selon les usages.</p></article>
+            </div>
+          </section>
+        </div>
+
+        <aside class="platform-sidecard">
+          <h3>Public cible</h3>
+          <p>À définir selon l'orientation choisie. Le projet reste ouvert aux suggestions, partenariats et tests terrain.</p>
+          <div class="platform-divider"></div>
+          <h3>Questions à trancher</h3>
+          <ul class="platform-check-list">
+            <li>Audience prioritaire</li>
+            <li>Problème principal</li>
+            <li>Modèle de valeur</li>
+            <li>Premier module testable</li>
+          </ul>
+          <div class="platform-divider"></div>
+          <div class="platform-connect-note">
+            <strong>Connexion future</strong>
+            <span>L'application complète sera développée dans un projet séparé. Cette page servira de point d'entrée vers son URL quand elle sera prête.</span>
+          </div>
+          <a class="btn btn-primary platform-full-button" href="../index.html#contact" data-platform-app-link="lodpam">Proposer une piste</a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- PRODUCT ROADMAP -->
+    <section class="platform-section platform-section-soft">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Chemin produit</p>
+          <h2>Valider avant de construire lourd.</h2>
+          <p>La meilleure version de Lodpam dépendra des retours, des partenariats et du premier cas d'usage réellement fort.</p>
+        </div>
+        <div class="platform-roadmap">
+          <article class="platform-roadstep"><span>Étape 1</span><h3>Collecte d'idées</h3><p>Recueillir besoins, propositions et problèmes récurrents.</p></article>
+          <article class="platform-roadstep"><span>Étape 2</span><h3>Prototype ciblé</h3><p>Tester un module simple avec une audience précise.</p></article>
+          <article class="platform-roadstep"><span>Étape 3</span><h3>Positionnement</h3><p>Choisir une direction claire et l'intégrer dans l'écosystème Synkora.</p></article>
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <!-- PLATFORM CTA -->
+    <section class="platform-section">
       <div class="container">
-        <div class="platform-layout">
+        <div class="platform-cta-strip">
           <div>
-            <h2>Un projet en réflexion</h2>
-            <p>Lodpam est une plateforme encore en phase de définition. Elle pourra devenir une marketplace, un service additionnel, une communauté spécialisée ou toute autre solution utileselon la stratégie du groupe et les besoins identifiés.</p>
-            <h2 style="margin-top: 40px;">Pistes envisagées</h2>
-            <ul class="feature-list">
-              <li>Marketplace de services professionnels</li>
-              <li>Plateforme de mise en relation</li>
-              <li>Service communautaire spécialisé</li>
-              <li>Outil collaboratif pour professionnels</li>
-              <li>Espace de stockage et partage de documents</li>
-            </ul>
+            <h2>Vous voyez une piste forte pour Lodpam ?</h2>
+            <p>Cette page garde Lodpam visible pendant l'exploration; l'application séparée sera connectée ici si le projet se confirme.</p>
           </div>
-          <div class="platform-sidecard">
-            <h3>Public cible</h3>
-            <p>À définir selon l'orientation choisie. Le projet reste ouvert aux suggestions et partenariats.</p>
-            <hr style="border: 0; border-top: 1px solid var(--line); margin: 20px 0;" />
-            <h3>Statut</h3>
-            <span class="tag" style="background: rgba(223,164,44,.1); color: #936306;">En réflexion</span>
-            <hr style="border: 0; border-top: 1px solid var(--line); margin: 20px 0;" />
-            <a class="btn btn-primary" href="../index.html#contact" style="width: 100%;">Proposer une idée</a>
+          <div class="platform-cta-actions">
+            <a class="btn btn-light" href="../index.html#contact">Partager une idée</a>
+            <a class="btn btn-light" href="../index.html#ecosysteme">Voir les plateformes</a>
           </div>
         </div>
       </div>
     </section>
   </main>
 
+  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container footer-inner">
       <div>
@@ -82,21 +190,21 @@
           <img src="../assets/logo-mark.svg" alt="" class="brand-mark" loading="lazy" />
           <span class="brand-text"><strong>SYNKORA</strong><small>GROUP</small></span>
         </a>
-        <p style="margin-top: 10px;">Créer. Connecter. Évoluer.</p>
+        <p class="footer-tagline">Créer. Connecter. Évoluer.</p>
       </div>
       <p>© <span data-year></span> Synkora Group. Tous droits réservés.</p>
-      <div class="footer-links" style="flex-direction: column; gap: 8px; align-items: flex-end;">
+      <div class="footer-links footer-links-stack">
         <a href="../index.html#ecosysteme">Plateformes</a>
-        <a href="../pages/apropos.html">À propos</a>
+        <a href="apropos.html">À propos</a>
         <a href="../index.html#contact">Contact</a>
-        <a href="../pages/mentions-legales.html">Mentions légales</a>
-        <a href="../pages/confidentialite.html">Confidentialité</a>
-        <a href="../pages/cgu.html">CGU</a>
-        <a href="../pages/cookies.html">Cookies</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="confidentialite.html">Confidentialité</a>
+        <a href="cgu.html">CGU</a>
+        <a href="cookies.html">Cookies</a>
       </div>
     </div>
   </footer>
 
-  <script src="../js/app.js"></script>
+  <script src="../js/app.js?v=20260610f"></script>
 </body>
 </html>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+  <title id="title">Sarah Kone avatar</title>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#0b5c8e"/>
+      <stop offset="1" stop-color="#20b8ad"/>
+    </linearGradient>
+  </defs>
+  <rect width="160" height="160" rx="80" fill="url(#bg)"/>
+  <circle cx="80" cy="58" r="27" fill="#ffffff" opacity=".95"/>
+  <path d="M35 141c7-32 27-49 45-49s38 17 45 49" fill="#ffffff" opacity=".95"/>
+  <path d="M42 42c20-22 57-25 82-4" fill="none" stroke="#dfa42c" stroke-width="10" stroke-linecap="round"/>
+  <text x="80" y="128" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="900" fill="#061b3a">SK</text>
+</svg>

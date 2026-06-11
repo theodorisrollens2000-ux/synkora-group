@@ -6,77 +6,183 @@
   <title>StudyNK - Synkora Group</title>
   <meta name="description" content="Réseau social d'apprentissage et de communauté : profils, contenus, groupes et partage." />
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+  <link rel="manifest" href="../site.webmanifest" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'" />
   <meta name="theme-color" content="#061b3a" />
-  <link rel="stylesheet" href="../css/styles.css" />
+  <meta name="color-scheme" content="light dark" />
+  <script>
+    (() => {
+      try {
+        const storedTheme = localStorage.getItem('synkora-theme');
+        const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = storedTheme || preferredTheme;
+      } catch (error) {
+        document.documentElement.dataset.theme = 'light';
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="../css/styles.css?v=20260610f" />
 </head>
 <body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
   <header class="site-header" data-header>
     <div class="container header-inner">
       <a class="brand" href="../index.html" aria-label="Synkora Group - Accueil">
         <img src="../assets/logo-mark.svg" alt="" class="brand-mark" fetchpriority="high" />
         <span class="brand-text"><strong>SYNKORA</strong><small>GROUP</small></span>
       </a>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
-        <span></span><span></span><span></span>
-        <span class="sr-only">Ouvrir le menu</span>
-      </button>
-      <nav id="site-nav" class="site-nav" data-nav>
-        <a href="../index.html#ecosysteme">Plateformes</a>
-        <a href="../index.html#activites">Activités</a>
-        <a href="../index.html#equipes">Équipe</a>
-        <a href="../pages/apropos.html">À propos</a>
-        <a href="../index.html#contact">Contact</a>
-      </nav>
+
+      <div class="header-actions">
+        <nav id="site-nav" class="site-nav" data-nav>
+          <a href="../index.html#ecosysteme">Plateformes</a>
+          <a href="../index.html#activites">Activités</a>
+          <a href="../index.html#architecture">Direction</a>
+          <a href="../index.html#equipes">Équipe</a>
+          <a href="apropos.html">À propos</a>
+          <a href="../index.html#contact">Contact</a>
+        </nav>
+
+        <button class="theme-toggle" type="button" aria-label="Activer le mode sombre" data-theme-toggle>
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.42-1.42M3.63 20.37l1.42-1.42m0-13.9L3.63 3.63m16.74 16.74-1.42-1.42M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />
+          </svg>
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 14.4A8.2 8.2 0 0 1 9.6 3 8.7 8.7 0 1 0 21 14.4Z" />
+          </svg>
+        </button>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+          <span></span><span></span><span></span>
+          <span class="sr-only">Ouvrir le menu</span>
+        </button>
+      </div>
     </div>
   </header>
 
-  <main>
-    <section class="section platform-hero" style="background: linear-gradient(135deg, #0b2d5a 0%, #dfa42c 100%); color: white;">
-      <div class="container" style="text-align: center;">
-        <p class="eyebrow" style="color: rgba(255,255,255,.6);">Plateforme du groupe</p>
-        <h1 style="color: white; font-size: clamp(48px, 6vw, 72px);">StudyNK</h1>
-        <p style="font-size: 21px; color: rgba(255,255,255,.8); max-width: 640px; margin: 20px auto 0;">Le réseau social utile pour apprendre, partager et évoluer ensemble.</p>
-        <div style="display: flex; gap: 14px; justify-content: center; margin-top: 32px; flex-wrap: wrap;">
-          <span class="tag" style="background: rgba(255,255,255,.15); color: white; border: 1px solid rgba(255,255,255,.2);">Réseau social</span>
-          <span class="tag" style="background: rgba(255,255,255,.15); color: white; border: 1px solid rgba(255,255,255,.2);">Apprentissage</span>
-          <span class="tag" style="background: rgba(255,255,255,.15); color: white; border: 1px solid rgba(255,255,255,.2);">Communauté</span>
+  <main id="main" class="platform-page platform-studynk">
+    <!-- PLATFORM HERO -->
+    <section class="platform-hero">
+      <div class="container platform-hero-grid">
+        <div>
+          <p class="platform-breadcrumb"><a href="../index.html#ecosysteme">Plateformes</a><span>/</span><span>StudyNK</span></p>
+          <p class="eyebrow">Apprentissage social</p>
+          <h1>StudyNK</h1>
+          <p class="lead">Un réseau social orienté apprentissage pour publier, partager, rejoindre des groupes et progresser avec une communauté utile.</p>
+          <div class="platform-pill-row">
+            <span class="platform-pill">Communauté</span>
+            <span class="platform-pill">Apprentissage</span>
+            <span class="platform-pill">Contenus</span>
+            <span class="platform-pill">Groupes</span>
+            <span class="platform-pill">App séparée</span>
+          </div>
+          <div class="platform-actions">
+            <!-- FUTURE APP LINK: replace href with the external StudyNK app URL when ready. -->
+            <a class="btn btn-primary" href="../index.html#contact" data-platform-app-link="studynk">Accès futur à l'app</a>
+            <a class="btn btn-secondary" href="../index.html#architecture">Voir la direction</a>
+          </div>
+        </div>
+
+        <aside class="platform-signal-panel" aria-label="Synthèse StudyNK">
+          <div class="platform-signal-top">
+            <span class="platform-mark">SN</span>
+            <span class="platform-status">En développement</span>
+          </div>
+          <h2>Un réseau social avec une intention utile.</h2>
+          <p>StudyNK met l'accent sur les profils d'apprentissage, les groupes thématiques, les contenus et la reconnaissance communautaire.</p>
+          <div class="platform-signal-metrics">
+            <div><strong>Feed</strong><span>Contenus éducatifs</span></div>
+            <div><strong>Groupes</strong><span>Communautés ciblées</span></div>
+            <div><strong>Badges</strong><span>Progression visible</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- PROBLEM, FEATURES AND AUDIENCE -->
+    <section class="platform-section">
+      <div class="container platform-layout">
+        <div class="platform-main-stack">
+          <section class="platform-block">
+            <p class="eyebrow">Problème résolu</p>
+            <h2>Créer un espace social qui aide vraiment à apprendre.</h2>
+            <p>Les réseaux sociaux classiques favorisent souvent la distraction. StudyNK cherche à orienter l'interaction vers l'échange de connaissances, les communautés d'apprentissage et la progression personnelle.</p>
+          </section>
+
+          <section class="platform-block">
+            <div class="platform-section-heading">
+              <div>
+                <p class="eyebrow">Fonctionnalités</p>
+                <h2>Un réseau pour progresser ensemble.</h2>
+              </div>
+            </div>
+            <div class="platform-feature-grid">
+              <article class="platform-feature-card"><span>01</span><h3>Profils enrichis</h3><p>Présenter compétences, intérêts, parcours et objectifs d'apprentissage.</p></article>
+              <article class="platform-feature-card"><span>02</span><h3>Groupes thématiques</h3><p>Créer ou rejoindre des communautés autour d'un sujet précis.</p></article>
+              <article class="platform-feature-card"><span>03</span><h3>Publications utiles</h3><p>Partager ressources, questions, réponses, notes et contenus structurés.</p></article>
+              <article class="platform-feature-card"><span>04</span><h3>Reconnaissance</h3><p>Badges, progression, contributions et signaux de confiance communautaire.</p></article>
+            </div>
+          </section>
+        </div>
+
+        <aside class="platform-sidecard">
+          <h3>Public cible</h3>
+          <p>Étudiants, apprenants, formateurs, professionnels, communautés éducatives et personnes qui veulent apprendre en réseau.</p>
+          <div class="platform-divider"></div>
+          <h3>Modules clés</h3>
+          <ul class="platform-check-list">
+            <li>Profils et publications</li>
+            <li>Groupes d'apprentissage</li>
+            <li>Messagerie</li>
+            <li>Badges et progression</li>
+          </ul>
+          <div class="platform-divider"></div>
+          <div class="platform-connect-note">
+            <strong>Connexion future</strong>
+            <span>L'application complète sera développée dans un projet séparé. Cette page servira de point d'entrée vers son URL quand elle sera prête.</span>
+          </div>
+          <a class="btn btn-primary platform-full-button" href="../index.html#contact" data-platform-app-link="studynk">Demander l'accès futur</a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- PRODUCT ROADMAP -->
+    <section class="platform-section platform-section-soft">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Chemin produit</p>
+          <h2>Construire la confiance avant la taille.</h2>
+          <p>StudyNK doit d'abord réussir la qualité des interactions avant de viser une grande communauté.</p>
+        </div>
+        <div class="platform-roadmap">
+          <article class="platform-roadstep"><span>Étape 1</span><h3>Profils et feed</h3><p>Créer les profils, publications et premières interactions publiques.</p></article>
+          <article class="platform-roadstep"><span>Étape 2</span><h3>Groupes et modération</h3><p>Structurer les communautés et la qualité des échanges.</p></article>
+          <article class="platform-roadstep"><span>Étape 3</span><h3>Progression</h3><p>Ajouter badges, parcours, recommandations et signal de confiance.</p></article>
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <!-- PLATFORM CTA -->
+    <section class="platform-section">
       <div class="container">
-        <div class="platform-layout">
+        <div class="platform-cta-strip">
           <div>
-            <h2>Problème résolu</h2>
-            <p>Les réseaux sociaux actuels sont souvent axés sur le divertissement. StudyNK propose un espace dédié à l'apprentissage, au partage de connaissances et à la construction de communautés utiles.</p>
-            <h2 style="margin-top: 40px;">Fonctionnalités</h2>
-            <ul class="feature-list">
-              <li>Profils utilisateurs enrichis</li>
-              <li>Publications et partage de contenus</li>
-              <li>Groupes d'apprentissage par thème</li>
-              <li>Système de suivi et d'évolution</li>
-              <li>Messagerie intégrée</li>
-              <li>Badges et reconnaissance communautaire</li>
-            </ul>
+            <h2>Un réseau social peut être plus qu'un fil d'actualité.</h2>
+            <p>Cette page présente StudyNK; l'application sociale complète sera reliée ici depuis son propre projet.</p>
           </div>
-          <div class="platform-sidecard">
-            <h3>Public cible</h3>
-            <p>Étudiants, apprenants, formateurs, professionnels, communautés éducatives et toute personne souhaitant apprendre et partager.</p>
-            <hr style="border: 0; border-top: 1px solid var(--line); margin: 20px 0;" />
-            <h3>Statut</h3>
-            <span class="tag" style="background: rgba(0,140,149,.1); color: var(--teal);">En développement</span>
-            <hr style="border: 0; border-top: 1px solid var(--line); margin: 20px 0;" />
-            <a class="btn btn-primary" href="../index.html#contact" style="width: 100%;">Être informé</a>
+          <div class="platform-cta-actions">
+            <a class="btn btn-light" href="../index.html#contact">Proposer une idée</a>
+            <a class="btn btn-light" href="../index.html#ecosysteme">Voir les plateformes</a>
           </div>
         </div>
       </div>
     </section>
   </main>
 
+  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container footer-inner">
       <div>
@@ -84,21 +190,21 @@
           <img src="../assets/logo-mark.svg" alt="" class="brand-mark" loading="lazy" />
           <span class="brand-text"><strong>SYNKORA</strong><small>GROUP</small></span>
         </a>
-        <p style="margin-top: 10px;">Créer. Connecter. Évoluer.</p>
+        <p class="footer-tagline">Créer. Connecter. Évoluer.</p>
       </div>
       <p>© <span data-year></span> Synkora Group. Tous droits réservés.</p>
-      <div class="footer-links" style="flex-direction: column; gap: 8px; align-items: flex-end;">
+      <div class="footer-links footer-links-stack">
         <a href="../index.html#ecosysteme">Plateformes</a>
-        <a href="../pages/apropos.html">À propos</a>
+        <a href="apropos.html">À propos</a>
         <a href="../index.html#contact">Contact</a>
-        <a href="../pages/mentions-legales.html">Mentions légales</a>
-        <a href="../pages/confidentialite.html">Confidentialité</a>
-        <a href="../pages/cgu.html">CGU</a>
-        <a href="../pages/cookies.html">Cookies</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="confidentialite.html">Confidentialité</a>
+        <a href="cgu.html">CGU</a>
+        <a href="cookies.html">Cookies</a>
       </div>
     </div>
   </footer>
 
-  <script src="../js/app.js"></script>
+  <script src="../js/app.js?v=20260610f"></script>
 </body>
 </html>

@@ -6,11 +6,13 @@
   <title>À propos - Synkora Group</title>
   <meta name="description" content="Découvrez Synkora Group : un groupe digital multi-plateformes ouvert à l'innovation, aux partenariats et aux projets utiles." />
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+  <link rel="manifest" href="../site.webmanifest" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" media="print" onload="this.media='all'" />
   <meta name="theme-color" content="#061b3a" />
-  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/styles.css?v=20260610f" />
 </head>
 <body>
   <header class="site-header" data-header>
@@ -34,49 +36,52 @@
   </header>
 
   <main>
-    <section class="section" style="background: linear-gradient(180deg, #f7fbfd 0%, #fff 100%);">
-      <div class="container" style="max-width: 800px;">
+    <!-- ABOUT HERO -->
+    <section class="section about-hero">
+      <div class="container narrow-container">
         <p class="eyebrow">À propos</p>
         <h1>Qui sommes-nous ?</h1>
-        <p class="lead" style="font-size: 21px; margin-top: 20px;">Synkora Group développe un écosystème de plateformes digitales destinées à connecter les personnes, les entreprises, les professionnels et les projets autour de solutions simples, utiles et évolutives.</p>
+        <p class="lead about-lead">Synkora Group développe un écosystème de plateformes digitales destinées à connecter les personnes, les entreprises, les professionnels et les projets autour de solutions simples, utiles et évolutives.</p>
       </div>
     </section>
 
+    <!-- VISION, MISSION AND VALUES -->
     <section class="section">
-      <div class="container" style="max-width: 800px;">
+      <div class="container narrow-container">
         <h2>Notre vision</h2>
         <p>Devenir un groupe digital de référence, capable d'accueillir et de développer plusieurs plateformes complémentaires qui répondent aux besoins concrets des utilisateurs, des professionnels et des entreprises.</p>
 
-        <h2 style="margin-top: 48px;">Notre mission</h2>
+        <h2 class="stack-heading">Notre mission</h2>
         <p>Créer, connecter et développer des plateformes utiles. Chaque projet du groupe est pensé pour apporter une solution réelle, évolutive et accessible, tout en s'intégrant dans un écosystème cohérent.</p>
 
-        <h2 style="margin-top: 48px;">Nos valeurs</h2>
-        <div style="display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 20px;">
-          <div style="border: 1px solid var(--line); border-radius: 20px; padding: 24px; text-align: center;">
-            <div style="width: 48px; height: 48px; border-radius: 14px; background: var(--navy); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; color: white; font-weight: 900;">01</div>
+        <h2 class="stack-heading">Nos valeurs</h2>
+        <div class="values-grid">
+          <div class="value-card">
+            <div class="value-number value-number-navy">01</div>
             <h3>Innovation</h3>
-            <p style="color: var(--slate); font-size: 14px; margin-top: 8px;">Toujours chercher des solutions nouvelles et intelligentes.</p>
+            <p>Toujours chercher des solutions nouvelles et intelligentes.</p>
           </div>
-          <div style="border: 1px solid var(--line); border-radius: 20px; padding: 24px; text-align: center;">
-            <div style="width: 48px; height: 48px; border-radius: 14px; background: var(--teal); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; color: white; font-weight: 900;">02</div>
+          <div class="value-card">
+            <div class="value-number value-number-teal">02</div>
             <h3>Ouverture</h3>
-            <p style="color: var(--slate); font-size: 14px; margin-top: 8px;">Accueillir les idées, les partenariats et les talents.</p>
+            <p>Accueillir les idées, les partenariats et les talents.</p>
           </div>
-          <div style="border: 1px solid var(--line); border-radius: 20px; padding: 24px; text-align: center;">
-            <div style="width: 48px; height: 48px; border-radius: 14px; background: var(--gold); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; color: var(--navy); font-weight: 900;">03</div>
+          <div class="value-card">
+            <div class="value-number value-number-gold">03</div>
             <h3>Utilité</h3>
-            <p style="color: var(--slate); font-size: 14px; margin-top: 8px;">Créer des plateformes qui servent vraiment à quelque chose.</p>
+            <p>Créer des plateformes qui servent vraiment à quelque chose.</p>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- ABOUT CTA -->
     <section class="section section-soft">
-      <div class="container" style="max-width: 800px; text-align: center;">
+      <div class="container narrow-container text-center">
         <p class="eyebrow">Rejoignez l'aventure</p>
         <h2>Vous avez un projet, une idée ou une compétence ?</h2>
         <p>Synkora Group est ouvert aux collaborations, partenariats et projets innovants.</p>
-        <div style="display: flex; gap: 14px; justify-content: center; margin-top: 28px; flex-wrap: wrap;">
+        <div class="center-actions">
           <a class="btn btn-primary" href="../index.html#contact">Nous contacter</a>
           <a class="btn btn-secondary" href="../index.html#ecosysteme">Découvrir les plateformes</a>
         </div>
@@ -84,6 +89,7 @@
     </section>
   </main>
 
+  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container footer-inner">
       <div>
@@ -91,10 +97,10 @@
           <img src="../assets/logo-mark.svg" alt="" class="brand-mark" loading="lazy" />
           <span class="brand-text"><strong>SYNKORA</strong><small>GROUP</small></span>
         </a>
-        <p style="margin-top: 10px;">Créer. Connecter. Évoluer.</p>
+        <p class="footer-tagline">Créer. Connecter. Évoluer.</p>
       </div>
       <p>© <span data-year></span> Synkora Group. Tous droits réservés.</p>
-      <div class="footer-links" style="flex-direction: column; gap: 8px; align-items: flex-end;">
+      <div class="footer-links footer-links-stack">
         <a href="../index.html#ecosysteme">Plateformes</a>
         <a href="apropos.html">À propos</a>
         <a href="../index.html#contact">Contact</a>
@@ -106,6 +112,6 @@
     </div>
   </footer>
 
-  <script src="../js/app.js"></script>
+  <script src="../js/app.js?v=20260610f"></script>
 </body>
 </html>

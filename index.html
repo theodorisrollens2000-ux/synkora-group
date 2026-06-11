@@ -6,15 +6,33 @@
   <title>Synkora Group - Ecosysteme digital multi-plateformes</title>
   <meta name="description" content="Synkora Group rassemble des plateformes digitales comme BuildSync AI, BizPocket, Devis BTP, StudyNK et Lodpam pour creer, connecter et developper." />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" as="style" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" media="print" onload="this.media='all'" />
-  <meta name="theme-color" content="#061b3a" />
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" as="style" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'" />
+  <meta name="theme-color" content="#f7f9fc" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="application-name" content="Synkora Group" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Synkora" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta property="og:title" content="Synkora Group - Ecosysteme digital multi-plateformes" />
   <meta property="og:description" content="Synkora Group rassemble des plateformes digitales : BuildSync AI, BizPocket, Devis BTP, StudyNK et Lodpam." />
   <meta property="og:type" content="website" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <script>
+    (() => {
+      try {
+        const storedTheme = localStorage.getItem('synkora-theme');
+        const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = storedTheme || preferredTheme;
+      } catch (error) {
+        document.documentElement.dataset.theme = 'light';
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="css/styles.css?v=20260610f" />
 </head>
 <body>
   <a class="skip-link" href="#main">Aller au contenu</a>
@@ -26,19 +44,30 @@
         <span class="brand-text"><strong>SYNKORA</strong><small>GROUP</small></span>
       </a>
 
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
-        <span></span><span></span><span></span>
-        <span class="sr-only">Ouvrir le menu</span>
-      </button>
+      <div class="header-actions">
+        <nav id="site-nav" class="site-nav" data-nav>
+          <a href="#ecosysteme">Plateformes</a>
+          <a href="#activites">Activités</a>
+          <a href="#architecture">Direction</a>
+          <a href="#equipes">Équipe</a>
+          <a href="pages/apropos.html">À propos</a>
+          <a href="#contact">Contact</a>
+        </nav>
 
-      <nav id="site-nav" class="site-nav" data-nav>
-        <a href="#ecosysteme">Plateformes</a>
-        <a href="#activites">Activités</a>
-        <a href="#equipes">Équipe</a>
-        <a href="pages/apropos.html">À propos</a>
-        <a href="#actualites">Actualités</a>
-        <a href="#contact">Contact</a>
-      </nav>
+        <button class="theme-toggle" type="button" aria-label="Activer le mode sombre" data-theme-toggle>
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.42-1.42M3.63 20.37l1.42-1.42m0-13.9L3.63 3.63m16.74 16.74-1.42-1.42M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />
+          </svg>
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 14.4A8.2 8.2 0 0 1 9.6 3 8.7 8.7 0 1 0 21 14.4Z" />
+          </svg>
+        </button>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+          <span></span><span></span><span></span>
+          <span class="sr-only">Ouvrir le menu</span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -48,11 +77,17 @@
       <div class="container hero-grid">
         <div class="hero-copy reveal">
           <p class="eyebrow">Ecosysteme digital ouvert</p>
-          <h1>Créer, connecter et développer des plateformes utiles.</h1>
+          <h1>Créer l'écosystème digital de vos plateformes.</h1>
           <p class="lead">Synkora Group rassemble des solutions digitales variées : construction, business, devis, réseau social, apprentissage, IA et services à venir.</p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="#ecosysteme">Voir les plateformes</a>
             <a class="btn btn-secondary" href="#contact">Nous contacter</a>
+          </div>
+          <div class="hero-proof" aria-label="Stack produit recommandée">
+            <span>Next.js</span>
+            <span>TypeScript</span>
+            <span>PostgreSQL</span>
+            <span>PWA</span>
           </div>
           <div class="platform-line" aria-label="Plateformes Synkora Group">
             <span>BuildSync AI</span>
@@ -63,17 +98,39 @@
           </div>
         </div>
 
-        <div class="hero-card reveal" aria-label="Vision Synkora Group">
-          <div class="orbit">
+        <div class="hero-card reveal" aria-label="Architecture Synkora Group">
+          <div class="console-top">
+            <div>
+              <span>Synkora OS</span>
+              <strong>Live ecosystem</strong>
+            </div>
             <img src="assets/logo-mark.svg" alt="Symbole Synkora Group" loading="lazy" />
-            <span class="node node-1">IA</span>
-            <span class="node node-2">BTP</span>
-            <span class="node node-3">Social</span>
-            <span class="node node-4">Business</span>
+          </div>
+          <div class="console-metrics" aria-label="Indicateurs de plateforme">
+            <div><strong>5+</strong><span>Apps</span></div>
+            <div><strong>99%</strong><span>Ready</span></div>
+            <div><strong>PWA</strong><span>Mobile</span></div>
+          </div>
+          <div class="console-list">
+            <div>
+              <span class="status-dot"></span>
+              <strong>BizPocket</strong>
+              <small>Next.js + shadcn/ui</small>
+            </div>
+            <div>
+              <span class="status-dot status-dot-gold"></span>
+              <strong>BuildSync AI</strong>
+              <small>IA, BTP, planning</small>
+            </div>
+            <div>
+              <span class="status-dot status-dot-coral"></span>
+              <strong>Data layer</strong>
+              <small>PostgreSQL + cloud storage</small>
+            </div>
           </div>
           <div class="hero-card-copy">
-            <h2>Une marque ombrelle</h2>
-            <p>Un groupe capable d'accueillir plusieurs projets, aujourd'hui et demain.</p>
+            <h2>Une base moderne, sans casser l'existant.</h2>
+            <p>Design system, mode sombre, PWA et architecture prête à grandir.</p>
           </div>
         </div>
       </div>
@@ -89,6 +146,245 @@
       </div>
     </section>
 
+    <!-- DIRECTION PRODUIT -->
+    <section id="architecture" class="section product-direction">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Direction produit</p>
+          <h2>Un chemin moderne sans changer trop vite de backend.</h2>
+          <p>La priorité est d'améliorer l'expérience, solidifier les données et préparer le mobile avant de séparer un backend dédié.</p>
+        </div>
+        <div class="direction-grid">
+          <article class="direction-card reveal">
+            <span>01</span>
+            <h3>Next.js + TypeScript</h3>
+            <p>Base claire pour des interfaces solides, maintenables et prêtes à évoluer.</p>
+          </article>
+          <article class="direction-card reveal">
+            <span>02</span>
+            <h3>PostgreSQL</h3>
+            <p>Données structurées pour comptes, projets, devis, équipes et historique.</p>
+          </article>
+          <article class="direction-card reveal">
+            <span>03</span>
+            <h3>shadcn/ui + dark mode</h3>
+            <p>Composants modernes, cohérents et plus premium pour BizPocket et les futures apps.</p>
+          </article>
+          <article class="direction-card reveal">
+            <span>04</span>
+            <h3>Cloud storage</h3>
+            <p>Fichiers, images, documents, avatars et pièces jointes gérés proprement.</p>
+          </article>
+          <article class="direction-card reveal">
+            <span>05</span>
+            <h3>PWA + Capacitor</h3>
+            <p>Expérience mobile plus stable, installable, puis prête pour APK si nécessaire.</p>
+          </article>
+          <article class="direction-card direction-card-strong reveal">
+            <span>06</span>
+            <h3>Backend séparé plus tard</h3>
+            <p>Si BizPocket devient très grand, le backend pourra être isolé sans bloquer la croissance.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROGRAMME & ARCHITECTURE -->
+    <section class="section architecture-overview">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Programme & architecture</p>
+          <h2>Synkora Group n'est pas une seule application.</h2>
+          <p>C'est la maison-mère digitale qui présente plusieurs produits, les connecte et prépare leur expansion vers plusieurs marchés.</p>
+        </div>
+
+        <details class="architecture-fold reveal" data-architecture-fold open>
+          <summary><span class="fold-number">01</span><strong>Rôle du site Synkora</strong></summary>
+          <div class="architecture-fold-body">
+        <div class="role-grid">
+          <article class="role-card reveal">
+            <span>01</span>
+            <h3>Vitrine institutionnelle</h3>
+            <p>Présenter le groupe, sa mission, ses valeurs, ses plateformes, son équipe, ses partenaires et sa vision.</p>
+          </article>
+          <article class="role-card reveal">
+            <span>02</span>
+            <h3>Hub de navigation</h3>
+            <p>Permettre au visiteur de comprendre l'écosystème et d'accéder rapidement à la plateforme qui l'intéresse.</p>
+          </article>
+          <article class="role-card reveal">
+            <span>03</span>
+            <h3>Base évolutive</h3>
+            <p>Commencer simplement, puis évoluer vers un portail avec admin, formulaires serveur, actualités et comptes.</p>
+          </article>
+        </div>
+          </div>
+        </details>
+
+        <details class="architecture-fold reveal" data-architecture-fold open>
+          <summary><span class="fold-number">02</span><strong>Architecture actuelle</strong></summary>
+          <div class="architecture-fold-body">
+        <div class="architecture-map reveal">
+          <div class="stack-card">
+            <p class="eyebrow">Architecture actuelle</p>
+            <h3>Vitrine statique + base PWA légère</h3>
+            <p>La version actuelle est correcte pour une première présence officielle : elle montre que Synkora existe, porte plusieurs produits et avance avec une direction claire.</p>
+            <div class="stack-list" aria-label="Fichiers actuels">
+              <span>index.html</span>
+              <span>pages/</span>
+              <span>css/styles.css</span>
+              <span>js/app.js</span>
+              <span>assets/</span>
+              <span>manifest</span>
+              <span>service worker</span>
+            </div>
+          </div>
+          <div class="evolution-rail" aria-label="Evolution cible">
+            <div class="rail-step">
+              <strong>Maintenant</strong>
+              <span>Site vitrine</span>
+            </div>
+            <div class="rail-step">
+              <strong>Demain</strong>
+              <span>Hub digital</span>
+            </div>
+            <div class="rail-step">
+              <strong>Plus tard</strong>
+              <span>Portail multi-plateformes</span>
+            </div>
+          </div>
+        </div>
+          </div>
+        </details>
+
+        <details class="architecture-fold reveal" data-architecture-fold open>
+          <summary><span class="fold-number">03</span><strong>Évolution court, moyen et long terme</strong></summary>
+          <div class="architecture-fold-body">
+        <div class="blueprint-grid">
+          <article class="blueprint-card reveal">
+            <span class="blueprint-label">Court terme</span>
+            <h3>Stabiliser la vitrine</h3>
+            <ul>
+              <li>Améliorer contenus, textes et pages plateformes</li>
+              <li>Optimiser responsive, images, SEO et formulaire</li>
+              <li>Garder HTML/CSS/JS rapide et maintenable</li>
+            </ul>
+          </article>
+          <article class="blueprint-card reveal">
+            <span class="blueprint-label">Moyen terme</span>
+            <h3>Passer en application moderne</h3>
+            <ul>
+              <li>Next.js + TypeScript + Tailwind + shadcn/ui</li>
+              <li>PostgreSQL avec Prisma ou Supabase</li>
+              <li>Actualités, contacts, plateformes et partenaires dynamiques</li>
+            </ul>
+          </article>
+          <article class="blueprint-card blueprint-card-strong reveal">
+            <span class="blueprint-label">Long terme</span>
+            <h3>Créer le portail du groupe</h3>
+            <ul>
+              <li>Synkora ID pour un compte commun</li>
+              <li>Admin global, analytics, support et partenaires</li>
+              <li>Connexion progressive vers BizPocket, BuildSync AI, Devis BTP et StudyNK</li>
+            </ul>
+          </article>
+        </div>
+          </div>
+        </details>
+
+        <details class="architecture-fold reveal" data-architecture-fold open>
+          <summary><span class="fold-number">04</span><strong>Synkora ID et multi-pays</strong></summary>
+          <div class="architecture-fold-body">
+        <div class="architecture-split">
+          <article class="system-panel reveal">
+            <p class="eyebrow">Synkora ID</p>
+            <h3>Une identité commune quand les plateformes seront actives.</h3>
+            <p>Un utilisateur pourra créer un compte Synkora, accéder à BizPocket, découvrir StudyNK, demander un devis BTP et recevoir les notifications du groupe.</p>
+            <div class="mini-flow">
+              <span>Compte Synkora</span>
+              <span>BizPocket</span>
+              <span>StudyNK</span>
+              <span>Devis BTP</span>
+            </div>
+          </article>
+          <article class="system-panel reveal">
+            <p class="eyebrow">Multi-pays</p>
+            <h3>Préparer plusieurs territoires sans refaire le site.</h3>
+            <p>Chaque pays pourra avoir ses langues, ses plateformes disponibles, ses contacts, ses partenaires, ses pages légales et ses moyens de paiement.</p>
+            <div class="country-list">
+              <span>Haïti : français, créole, MonCash, NatCash</span>
+              <span>États-Unis : anglais, créole, carte, Zelle, Stripe</span>
+              <span>République Dominicaine : espagnol, anglais, créole</span>
+            </div>
+          </article>
+        </div>
+          </div>
+        </details>
+
+        <details class="architecture-fold reveal" data-architecture-fold open>
+          <summary><span class="fold-number">05</span><strong>Modules futurs du portail</strong></summary>
+          <div class="architecture-fold-body">
+        <div class="module-cloud reveal" aria-label="Modules futurs du site">
+          <span>Public Website</span>
+          <span>Platform Directory</span>
+          <span>News / Blog</span>
+          <span>Roadmap</span>
+          <span>Partners</span>
+          <span>Team</span>
+          <span>Careers</span>
+          <span>Contact</span>
+          <span>Demo Requests</span>
+          <span>Newsletter</span>
+          <span>Legal Pages</span>
+          <span>Admin Dashboard</span>
+          <span>Country Config</span>
+          <span>Analytics</span>
+          <span>Media Library</span>
+          <span>Investor Space</span>
+        </div>
+          </div>
+        </details>
+
+        <details class="architecture-fold reveal" data-architecture-fold open>
+          <summary><span class="fold-number">06</span><strong>Admin, backend, sécurité et PWA</strong></summary>
+          <div class="architecture-fold-body">
+        <div class="ops-grid">
+          <article class="ops-card reveal">
+            <h3>Admin Synkora</h3>
+            <p>Gérer plateformes, actualités, partenaires, contacts, demandes de démo, roadmap, équipe, pays actifs et pages légales.</p>
+            <span>Rôles : owner, admin, editor, support</span>
+          </article>
+          <article class="ops-card reveal">
+            <h3>API & backend futur</h3>
+            <p>Prévoir /api/contact, /api/news, /api/platforms, /api/partners, /api/demo-requests, /api/newsletter et /api/admin.</p>
+            <span>Le formulaire devra enregistrer, notifier et protéger contre le spam.</span>
+          </article>
+          <article class="ops-card reveal">
+            <h3>Base de données</h3>
+            <p>Tables futures : platforms, news_posts, partners, team_members, contact_messages, demo_requests, country_configs, audit_logs.</p>
+            <span>PostgreSQL avec historique et données propres.</span>
+          </article>
+          <article class="ops-card reveal">
+            <h3>Sécurité</h3>
+            <p>Limiter les scripts externes, protéger les formulaires, valider côté serveur, ajouter rôles admin, rate limiting et audit logs.</p>
+            <span>La sécurité doit être prévue avant le portail complet.</span>
+          </article>
+          <article class="ops-card reveal">
+            <h3>PWA & mobile</h3>
+            <p>Garder la base PWA légère maintenant, puis ajouter page offline, notifications et Capacitor si une vraie app mobile devient utile.</p>
+            <span>L'APK concerne surtout les plateformes comme BizPocket ou StudyNK.</span>
+          </article>
+          <article class="ops-card ops-card-warning reveal">
+            <h3>À éviter</h3>
+            <p>Ne pas transformer le site groupe en app trop lourde trop tôt, ne pas mélanger tous les produits, ne pas lancer d'admin sans audit log.</p>
+            <span>Le site présente et connecte ; les apps restent séparées.</span>
+          </article>
+        </div>
+          </div>
+        </details>
+      </div>
+    </section>
+
     <!-- ÉCOSYSTÈME -->
     <section id="ecosysteme" class="section">
       <div class="container">
@@ -100,37 +396,37 @@
 
         <div class="cards-grid ecosystem-grid">
           <a href="pages/buildsync-ai.html" class="card eco-card reveal">
-            <div class="card-icon" style="background: linear-gradient(135deg, #061b3a, #008c95);">AI</div>
+            <div class="card-icon card-icon-buildsync">AI</div>
             <h3>BuildSync AI</h3>
             <p>IA, construction, suivi de chantier, coordination, planning et automatisation.</p>
             <span class="tag">Construction + IA</span>
           </a>
           <a href="pages/bizpocket.html" class="card eco-card reveal">
-            <div class="card-icon" style="background: linear-gradient(135deg, #0b2d5a, #00a3a8);">BP</div>
+            <div class="card-icon card-icon-bizpocket">BP</div>
             <h3>BizPocket</h3>
             <p>Outils digitaux pour entrepreneurs, indépendants et petites structures.</p>
             <span class="tag">Business tools</span>
           </a>
           <a href="pages/devis-btp.html" class="card eco-card reveal">
-            <div class="card-icon" style="background: linear-gradient(135deg, #061b3a, #dfa42c);">DB</div>
+            <div class="card-icon card-icon-devis">DB</div>
             <h3>Devis BTP</h3>
             <p>Plateforme pour faciliter les devis, l'estimation et la mise en relation dans le BTP.</p>
             <span class="tag">Devis + BTP</span>
           </a>
           <a href="pages/studynk.html" class="card eco-card reveal">
-            <div class="card-icon" style="background: linear-gradient(135deg, #0b2d5a, #dfa42c);">SN</div>
+            <div class="card-icon card-icon-studynk">SN</div>
             <h3>StudyNK</h3>
             <p>Réseau social d'apprentissage : profils, contenus, groupes et partage.</p>
             <span class="tag">Réseau social</span>
           </a>
           <a href="pages/lodpam.html" class="card eco-card reveal">
-            <div class="card-icon" style="background: linear-gradient(135deg, #627084, #8a9aa8);">LP</div>
+            <div class="card-icon card-icon-lodpam">LP</div>
             <h3>Lodpam</h3>
             <p>Projet ouvert : marketplace, service, communauté ou solution métier.</p>
             <span class="tag">Plateforme ouverte</span>
           </a>
-          <div class="card eco-card reveal" style="cursor: default;">
-            <div class="card-icon" style="background: linear-gradient(135deg, #061b3a, #dfa42c);">+</div>
+          <div class="card eco-card eco-card-static reveal">
+            <div class="card-icon card-icon-future">+</div>
             <h3>Futurs projets</h3>
             <p>Finance, média, formation, marketplace, IA ou mobile — le groupe reste ouvert.</p>
             <span class="tag">Innovation ouverte</span>
@@ -169,31 +465,31 @@
         </div>
         <div class="team-grid">
           <article class="team-card reveal">
-            <div class="team-avatar"><img src="https://i.pravatar.cc/160?u=alex" alt="Alexandre Mercier" loading="lazy" /></div>
+            <div class="team-avatar"><img src="assets/team-alexandre.svg" width="160" height="160" alt="Alexandre Mercier" loading="lazy" /></div>
             <h3>Alexandre Mercier</h3>
             <span class="team-role">Direction & stratégie</span>
             <p>Vision groupe, priorités, partenariats et pilotage global.</p>
           </article>
           <article class="team-card reveal">
-            <div class="team-avatar"><img src="https://i.pravatar.cc/160?u=sarah" alt="Sarah Kone" loading="lazy" /></div>
+            <div class="team-avatar"><img src="assets/team-sarah.svg" width="160" height="160" alt="Sarah Kone" loading="lazy" /></div>
             <h3>Sarah Kone</h3>
             <span class="team-role">Produit & design</span>
             <p>Parcours utilisateurs, identité visuelle, maquettes et expérience client.</p>
           </article>
           <article class="team-card reveal">
-            <div class="team-avatar"><img src="https://i.pravatar.cc/160?u=mehdi" alt="Mehdi Benali" loading="lazy" /></div>
+            <div class="team-avatar"><img src="assets/team-mehdi.svg" width="160" height="160" alt="Mehdi Benali" loading="lazy" /></div>
             <h3>Mehdi Benali</h3>
             <span class="team-role">Développement</span>
             <p>Sites web, applications, intégrations, automatisations et IA.</p>
           </article>
           <article class="team-card reveal">
-            <div class="team-avatar"><img src="https://i.pravatar.cc/160?u=emma" alt="Emma Diallo" loading="lazy" /></div>
+            <div class="team-avatar"><img src="assets/team-emma.svg" width="160" height="160" alt="Emma Diallo" loading="lazy" /></div>
             <h3>Emma Diallo</h3>
             <span class="team-role">Business & partenariats</span>
             <p>Offres, acquisition, relation client, réseau et développement commercial.</p>
           </article>
           <article class="team-card reveal">
-            <div class="team-avatar"><img src="https://i.pravatar.cc/160?u=lucas" alt="Lucas Dubois" loading="lazy" /></div>
+            <div class="team-avatar"><img src="assets/team-lucas.svg" width="160" height="160" alt="Lucas Dubois" loading="lazy" /></div>
             <h3>Lucas Dubois</h3>
             <span class="team-role">Support & communauté</span>
             <p>Animation, assistance, modération, documentation et suivi utilisateurs.</p>
@@ -243,40 +539,40 @@
           <p>Des organisations avec lesquelles nous collaborons pour construire l'écosystème.</p>
         </div>
         <div class="partners-grid">
-          <a class="partner-card reveal" href="#">
-            <div class="partner-logo" style="background: #0d4f77;">TC</div>
+          <a class="partner-card reveal" href="#contact" data-contact-subject="Partenariat - Tech Connect" data-contact-type="partenariat" data-contact-platform="general" aria-label="Contacter Synkora Group au sujet de Tech Connect">
+            <div class="partner-logo partner-logo-tech">TC</div>
             <div>
               <h3>Tech Connect</h3>
               <span class="partner-tag">Innovation</span>
               <p>Partenariat R&D sur les solutions IA et l'automatisation des processus métiers.</p>
             </div>
           </a>
-          <a class="partner-card reveal" href="#">
-            <div class="partner-logo" style="background: #dfa42c;">DV</div>
+          <a class="partner-card reveal" href="#contact" data-contact-subject="Partenariat - Digital Ventures" data-contact-type="partenariat" data-contact-platform="general" aria-label="Contacter Synkora Group au sujet de Digital Ventures">
+            <div class="partner-logo partner-logo-ventures">DV</div>
             <div>
               <h3>Digital Ventures</h3>
               <span class="partner-tag">Incubation</span>
               <p>Accompagnement des startups du groupe en pré-incubation et levée de fonds.</p>
             </div>
           </a>
-          <a class="partner-card reveal" href="#">
-            <div class="partner-logo" style="background: #061b3a;">WA</div>
+          <a class="partner-card reveal" href="#contact" data-contact-subject="Partenariat - Web Agency Group" data-contact-type="partenariat" data-contact-platform="general" aria-label="Contacter Synkora Group au sujet de Web Agency Group">
+            <div class="partner-logo partner-logo-agency">WA</div>
             <div>
               <h3>Web Agency Group</h3>
               <span class="partner-tag">Production</span>
               <p>Ressources techniques et déploiement des plateformes web et mobiles du groupe.</p>
             </div>
           </a>
-          <a class="partner-card reveal" href="#">
-            <div class="partner-logo" style="background: #008c95;">AE</div>
+          <a class="partner-card reveal" href="#contact" data-contact-subject="Partenariat - Afrique Entreprises" data-contact-type="partenariat" data-contact-platform="general" aria-label="Contacter Synkora Group au sujet de Afrique Entreprises">
+            <div class="partner-logo partner-logo-africa">AE</div>
             <div>
               <h3>Afrique Entreprises</h3>
               <span class="partner-tag">Réseau</span>
               <p>Mise en relation avec les acteurs économiques africains pour le déploiement terrain.</p>
             </div>
           </a>
-          <a class="partner-card reveal" href="#">
-            <div class="partner-logo" style="background: #061b3a;">FS</div>
+          <a class="partner-card reveal" href="#contact" data-contact-subject="Partenariat - Future Solutions" data-contact-type="partenariat" data-contact-platform="general" aria-label="Contacter Synkora Group au sujet de Future Solutions">
+            <div class="partner-logo partner-logo-future">FS</div>
             <div>
               <h3>Future Solutions</h3>
               <span class="partner-tag">Conseil</span>
@@ -292,44 +588,62 @@
       <div class="container">
         <div class="section-heading reveal">
           <p class="eyebrow">Roadmap</p>
-          <h2>Vision 2025 – 2030.</h2>
-          <p>Notre feuille de route pour construire l'écosystème.</p>
+          <h2>Les phases recommandées pour faire grandir Synkora.</h2>
+          <p>Le site commence comme une vitrine, puis évolue progressivement vers un portail multi-plateformes avec admin, données, multi-pays et identité commune.</p>
         </div>
         <div class="roadmap-grid">
           <div class="roadmap-item reveal">
-            <span class="roadmap-year">2025</span>
-            <h3>Fondations</h3>
+            <span class="roadmap-year">Phase 1</span>
+            <h3>Stabiliser la vitrine</h3>
             <ul>
-              <li>Lancement de la vitrine Synkora Group</li>
-              <li>Structuration des 5 plateformes</li>
-              <li>Définition de l'identité et de la stratégie</li>
+              <li>Corriger responsive et textes</li>
+              <li>Clarifier chaque plateforme</li>
+              <li>Optimiser images, SEO, contact et PWA légère</li>
             </ul>
           </div>
           <div class="roadmap-item reveal">
-            <span class="roadmap-year">2026</span>
-            <h3>Déploiement</h3>
+            <span class="roadmap-year">Phase 2</span>
+            <h3>Migrer vers Next.js</h3>
             <ul>
-              <li>Premières versions publiques des plateformes</li>
-              <li>Développement mobile et responsive</li>
-              <li>Espace utilisateur et comptes membres</li>
+              <li>Next.js + TypeScript</li>
+              <li>Tailwind CSS + composants propres</li>
+              <li>Routing, dark mode et structure scalable</li>
             </ul>
           </div>
           <div class="roadmap-item reveal">
-            <span class="roadmap-year">2027</span>
-            <h3>Croissance</h3>
+            <span class="roadmap-year">Phase 3</span>
+            <h3>Ajouter backend léger</h3>
             <ul>
-              <li>Marketplace intégrée à l'écosystème</li>
-              <li>Nouveaux services et fonctionnalités</li>
-              <li>Déploiement internationale</li>
+              <li>Formulaire serveur</li>
+              <li>Demandes de contact, démo et newsletter</li>
+              <li>Actualités et partenaires dynamiques</li>
             </ul>
           </div>
           <div class="roadmap-item reveal">
-            <span class="roadmap-year">2028+</span>
-            <h3>Expansion</h3>
+            <span class="roadmap-year">Phase 4</span>
+            <h3>Créer l'admin Synkora</h3>
             <ul>
-              <li>Nouvelles plateformes et partenariats</li>
-              <li>IA avancée et automatisation</li>
-              <li>Version multilingue et internationale</li>
+              <li>Login admin et rôles</li>
+              <li>Gestion plateformes, actualités, partenaires et roadmap</li>
+              <li>Historique, contacts et audit logs</li>
+            </ul>
+          </div>
+          <div class="roadmap-item reveal">
+            <span class="roadmap-year">Phase 5</span>
+            <h3>Multi-pays et langues</h3>
+            <ul>
+              <li>Français, créole, anglais et espagnol</li>
+              <li>Configuration par pays</li>
+              <li>Contacts locaux et plateformes disponibles</li>
+            </ul>
+          </div>
+          <div class="roadmap-item reveal">
+            <span class="roadmap-year">Phase 6</span>
+            <h3>Portail groupe</h3>
+            <ul>
+              <li>Synkora ID</li>
+              <li>Liens vers les apps et espace partenaires</li>
+              <li>Analytics, support central et intégration produits</li>
             </ul>
           </div>
         </div>
@@ -346,30 +660,30 @@
         </div>
         <div class="blog-grid">
           <article class="blog-card reveal">
-            <div class="blog-img" style="background: linear-gradient(135deg, #061b3a, #008c95);"><span>Lancement</span></div>
+            <div class="blog-img blog-img-launch"><span>Lancement</span></div>
             <div class="blog-body">
               <span class="blog-date">Mai 2026</span>
               <h3>Lancement de Synkora Group</h3>
               <p>Le groupe dévoile sa vitrine officielle et présente ses 5 plateformes digitales.</p>
-              <a href="#" class="blog-link">Lire l'article →</a>
+              <a href="pages/article-lancement-synkora.html" class="blog-link">Lire l'article →</a>
             </div>
           </article>
           <article class="blog-card reveal">
-            <div class="blog-img" style="background: linear-gradient(135deg, #0b2d5a, #dfa42c);"><span>Plateforme</span></div>
+            <div class="blog-img blog-img-platform"><span>Plateforme</span></div>
             <div class="blog-body">
               <span class="blog-date">Mai 2026</span>
               <h3>BuildSync AI : l'IA au service du BTP</h3>
               <p>Découvrez comment l'intelligence artificielle transforme la gestion de chantier.</p>
-              <a href="#" class="blog-link">Lire l'article →</a>
+              <a href="pages/article-buildsync-ai-btp.html" class="blog-link">Lire l'article →</a>
             </div>
           </article>
           <article class="blog-card reveal">
-            <div class="blog-img" style="background: linear-gradient(135deg, #061b3a, #dfa42c);"><span>Vision</span></div>
+            <div class="blog-img blog-img-vision"><span>Vision</span></div>
             <div class="blog-body">
               <span class="blog-date">Mai 2026</span>
               <h3>Pourquoi un écosystème multi-plateformes ?</h3>
               <p>La vision derrière Synkora Group et l'ambition de connecter plusieurs solutions utiles.</p>
-              <a href="#" class="blog-link">Lire l'article →</a>
+              <a href="pages/article-ecosysteme-multi-plateformes.html" class="blog-link">Lire l'article →</a>
             </div>
           </article>
         </div>
@@ -384,7 +698,7 @@
           <h2>Vous avez une idée, un projet ou une compétence ?</h2>
           <p>Synkora Group est ouvert aux collaborations, partenariats, talents et projets innovants. Proposez votre projet, devenez partenaire ou rejoignez l'équipe.</p>
         </div>
-        <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+        <div class="cta-actions">
           <a class="btn btn-light" href="#contact">Proposer un projet</a>
           <a class="btn btn-light" href="#contact">Devenir partenaire</a>
         </div>
@@ -401,24 +715,28 @@
           <div class="contact-cards">
             <div><strong>Email</strong><span>contact@synkora-group.com</span></div>
             <div><strong>Téléphone</strong><span>+1 000 000 0000</span></div>
-            <div><strong>WhatsApp</strong><span><a href="https://wa.me/10000000000" style="color: var(--teal); font-weight: 700;" target="_blank">Écrire sur WhatsApp →</a></span></div>
+            <div><strong>WhatsApp</strong><span><a class="contact-link" href="https://wa.me/10000000000" target="_blank" rel="noopener noreferrer">Écrire sur WhatsApp →</a></span></div>
             <div><strong>Localisation</strong><span>Floride, États-Unis</span></div>
           </div>
           <div class="social-links">
-            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-            <a href="#" aria-label="Twitter / X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-            <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg></a>
+            <a href="mailto:contact@synkora-group.com" aria-label="Envoyer un email à Synkora Group"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg></a>
+            <a href="https://wa.me/10000000000" target="_blank" rel="noopener noreferrer" aria-label="Écrire à Synkora Group sur WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 19l1.5-4A8 8 0 1 1 9 18.5L4 19z"/><path d="M9 9.5c.6 2.2 2.1 3.8 4.2 4.5l1.2-1.2"/></svg></a>
+            <a href="#actualites" aria-label="Voir les actualités Synkora Group"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M5 5h14v14H5z"/><path d="M8 9h8M8 13h6M8 17h4"/></svg></a>
           </div>
         </div>
 
         <form class="contact-form reveal" data-contact-form>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <input name="form-started-at" type="hidden" data-form-started-at />
+          <label class="hp-field" aria-hidden="true">Site web
+            <input name="website" type="text" tabindex="-1" autocomplete="off" />
+          </label>
+          <div class="contact-name-grid">
             <label>Nom complet <input name="name" type="text" placeholder="Votre nom" required /></label>
             <label>Email <input name="email" type="email" placeholder="votre@email.com" required /></label>
           </div>
           <label>Téléphone <input name="phone" type="tel" placeholder="+1 000 000 0000" /></label>
           <label>Plateforme concernée
-            <select name="platform" style="width: 100%; border: 1px solid var(--line); border-radius: 16px; padding: 13px 14px; color: var(--ink); outline: none; background: white; font: inherit;">
+            <select name="platform">
               <option value="">Sélectionnez une plateforme</option>
               <option value="buildsync-ai">BuildSync AI</option>
               <option value="bizpocket">BizPocket</option>
@@ -429,7 +747,7 @@
             </select>
           </label>
           <label>Type de demande
-            <select name="request-type" style="width: 100%; border: 1px solid var(--line); border-radius: 16px; padding: 13px 14px; color: var(--ink); outline: none; background: white; font: inherit;">
+            <select name="request-type">
               <option value="">Sélectionnez un type</option>
               <option value="partenariat">Partenariat</option>
               <option value="investissement">Investissement</option>
@@ -442,7 +760,7 @@
           <label>Sujet <input name="subject" type="text" placeholder="Partenariat, plateforme, contact..." required /></label>
           <label>Message <textarea name="message" rows="5" placeholder="Votre message" required></textarea></label>
           <button class="btn btn-primary" type="submit">Envoyer le message</button>
-          <p class="form-note" data-form-note>Le formulaire ouvre votre application email. Une connexion serveur pourra être ajoutée en phase 2.</p>
+          <p class="form-note" data-form-note>Le message est préparé, sauvegardé dans ce navigateur, puis envoyé via votre application email.</p>
         </form>
       </div>
     </section>
@@ -455,15 +773,15 @@
           <img src="assets/logo-mark.svg" alt="" class="brand-mark" loading="lazy" />
           <span class="brand-text"><strong>SYNKORA</strong><small>GROUP</small></span>
         </a>
-        <p style="margin-top: 10px;">Créer. Connecter. Évoluer.</p>
-        <div class="social-links" style="margin-top: 12px;">
-          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" style="width: 18px; height: 18px;"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-          <a href="#" aria-label="Twitter / X"><svg viewBox="0 0 24 24" fill="currentColor" style="width: 18px; height: 18px;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-          <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor" style="width: 18px; height: 18px;"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg></a>
+        <p class="footer-tagline">Créer. Connecter. Évoluer.</p>
+        <div class="social-links footer-social">
+          <a href="mailto:contact@synkora-group.com" aria-label="Envoyer un email à Synkora Group"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg></a>
+          <a href="https://wa.me/10000000000" target="_blank" rel="noopener noreferrer" aria-label="Écrire à Synkora Group sur WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 19l1.5-4A8 8 0 1 1 9 18.5L4 19z"/><path d="M9 9.5c.6 2.2 2.1 3.8 4.2 4.5l1.2-1.2"/></svg></a>
+          <a href="#actualites" aria-label="Voir les actualités Synkora Group"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M5 5h14v14H5z"/><path d="M8 9h8M8 13h6M8 17h4"/></svg></a>
         </div>
       </div>
       <p>© <span data-year></span> Synkora Group. Tous droits réservés.</p>
-      <div class="footer-links" style="flex-direction: column; gap: 8px; align-items: flex-end;">
+      <div class="footer-links footer-links-stack">
         <a href="#ecosysteme">Plateformes</a>
         <a href="#activites">Activités</a>
         <a href="pages/apropos.html">À propos</a>
@@ -477,6 +795,6 @@
     </div>
   </footer>
 
-  <script src="js/app.js"></script>
+  <script src="js/app.js?v=20260610f"></script>
 </body>
 </html>

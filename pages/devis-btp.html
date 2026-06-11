@@ -6,77 +6,183 @@
   <title>Devis BTP - Synkora Group</title>
   <meta name="description" content="Plateforme de devis, estimation et mise en relation dans le secteur du BTP." />
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+  <link rel="manifest" href="../site.webmanifest" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'" />
   <meta name="theme-color" content="#061b3a" />
-  <link rel="stylesheet" href="../css/styles.css" />
+  <meta name="color-scheme" content="light dark" />
+  <script>
+    (() => {
+      try {
+        const storedTheme = localStorage.getItem('synkora-theme');
+        const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = storedTheme || preferredTheme;
+      } catch (error) {
+        document.documentElement.dataset.theme = 'light';
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="../css/styles.css?v=20260610f" />
 </head>
 <body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
   <header class="site-header" data-header>
     <div class="container header-inner">
       <a class="brand" href="../index.html" aria-label="Synkora Group - Accueil">
         <img src="../assets/logo-mark.svg" alt="" class="brand-mark" fetchpriority="high" />
         <span class="brand-text"><strong>SYNKORA</strong><small>GROUP</small></span>
       </a>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
-        <span></span><span></span><span></span>
-        <span class="sr-only">Ouvrir le menu</span>
-      </button>
-      <nav id="site-nav" class="site-nav" data-nav>
-        <a href="../index.html#ecosysteme">Plateformes</a>
-        <a href="../index.html#activites">Activités</a>
-        <a href="../index.html#equipes">Équipe</a>
-        <a href="../pages/apropos.html">À propos</a>
-        <a href="../index.html#contact">Contact</a>
-      </nav>
+
+      <div class="header-actions">
+        <nav id="site-nav" class="site-nav" data-nav>
+          <a href="../index.html#ecosysteme">Plateformes</a>
+          <a href="../index.html#activites">Activités</a>
+          <a href="../index.html#architecture">Direction</a>
+          <a href="../index.html#equipes">Équipe</a>
+          <a href="apropos.html">À propos</a>
+          <a href="../index.html#contact">Contact</a>
+        </nav>
+
+        <button class="theme-toggle" type="button" aria-label="Activer le mode sombre" data-theme-toggle>
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.42-1.42M3.63 20.37l1.42-1.42m0-13.9L3.63 3.63m16.74 16.74-1.42-1.42M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />
+          </svg>
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 14.4A8.2 8.2 0 0 1 9.6 3 8.7 8.7 0 1 0 21 14.4Z" />
+          </svg>
+        </button>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+          <span></span><span></span><span></span>
+          <span class="sr-only">Ouvrir le menu</span>
+        </button>
+      </div>
     </div>
   </header>
 
-  <main>
-    <section class="section platform-hero" style="background: linear-gradient(135deg, #061b3a 0%, #dfa42c 100%); color: white;">
-      <div class="container" style="text-align: center;">
-        <p class="eyebrow" style="color: rgba(255,255,255,.6);">Plateforme du groupe</p>
-        <h1 style="color: white; font-size: clamp(48px, 6vw, 72px);">Devis BTP</h1>
-        <p style="font-size: 21px; color: rgba(255,255,255,.8); max-width: 640px; margin: 20px auto 0;">Simplifiez la création de devis, l'estimation et la mise en relation dans le BTP.</p>
-        <div style="display: flex; gap: 14px; justify-content: center; margin-top: 32px; flex-wrap: wrap;">
-          <span class="tag" style="background: rgba(255,255,255,.15); color: white; border: 1px solid rgba(255,255,255,.2);">Devis</span>
-          <span class="tag" style="background: rgba(255,255,255,.15); color: white; border: 1px solid rgba(255,255,255,.2);">BTP</span>
-          <span class="tag" style="background: rgba(255,255,255,.15); color: white; border: 1px solid rgba(255,255,255,.2);">Estimation</span>
+  <main id="main" class="platform-page platform-devis">
+    <!-- PLATFORM HERO -->
+    <section class="platform-hero">
+      <div class="container platform-hero-grid">
+        <div>
+          <p class="platform-breadcrumb"><a href="../index.html#ecosysteme">Plateformes</a><span>/</span><span>Devis BTP</span></p>
+          <p class="eyebrow">Devis + estimation</p>
+          <h1>Devis BTP</h1>
+          <p class="lead">Une plateforme pour structurer les demandes de travaux, estimer les coûts et faciliter la mise en relation entre clients et professionnels.</p>
+          <div class="platform-pill-row">
+            <span class="platform-pill">Devis</span>
+            <span class="platform-pill">Estimation</span>
+            <span class="platform-pill">BTP</span>
+            <span class="platform-pill">Mise en relation</span>
+            <span class="platform-pill">App séparée</span>
+          </div>
+          <div class="platform-actions">
+            <!-- FUTURE APP LINK: replace href with the external Devis BTP app URL when ready. -->
+            <a class="btn btn-primary" href="../index.html#contact" data-platform-app-link="devis-btp">Accès futur à l'app</a>
+            <a class="btn btn-secondary" href="../index.html#architecture">Voir l'architecture</a>
+          </div>
+        </div>
+
+        <aside class="platform-signal-panel" aria-label="Synthèse Devis BTP">
+          <div class="platform-signal-top">
+            <span class="platform-mark">DB</span>
+            <span class="platform-status">En développement</span>
+          </div>
+          <h2>Des demandes plus nettes, des devis plus rapides.</h2>
+          <p>Devis BTP aide à qualifier un besoin, préparer une estimation et suivre l'avancement commercial jusqu'à la décision.</p>
+          <div class="platform-signal-metrics">
+            <div><strong>Devis</strong><span>Documents guidés</span></div>
+            <div><strong>Coût</strong><span>Estimations claires</span></div>
+            <div><strong>Match</strong><span>Pros et clients</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- PROBLEM, FEATURES AND AUDIENCE -->
+    <section class="platform-section">
+      <div class="container platform-layout">
+        <div class="platform-main-stack">
+          <section class="platform-block">
+            <p class="eyebrow">Problème résolu</p>
+            <h2>Rendre les devis BTP plus rapides, mieux suivis et plus comparables.</h2>
+            <p>Les demandes de travaux sont souvent incomplètes et les devis difficiles à comparer. Devis BTP structure les informations utiles, accompagne l'estimation et crée un suivi clair entre demande, proposition et validation.</p>
+          </section>
+
+          <section class="platform-block">
+            <div class="platform-section-heading">
+              <div>
+                <p class="eyebrow">Fonctionnalités</p>
+                <h2>Un parcours devis complet.</h2>
+              </div>
+            </div>
+            <div class="platform-feature-grid">
+              <article class="platform-feature-card"><span>01</span><h3>Demande guidée</h3><p>Collecter les bonnes informations dès le départ pour éviter les allers-retours.</p></article>
+              <article class="platform-feature-card"><span>02</span><h3>Estimation assistée</h3><p>Préparer une première fourchette de coût selon les postes et contraintes.</p></article>
+              <article class="platform-feature-card"><span>03</span><h3>Suivi des statuts</h3><p>Garder l'historique des demandes, devis, relances et validations.</p></article>
+              <article class="platform-feature-card"><span>04</span><h3>Mise en relation</h3><p>Connecter clients et professionnels selon localisation, métier et besoin.</p></article>
+            </div>
+          </section>
+        </div>
+
+        <aside class="platform-sidecard">
+          <h3>Public cible</h3>
+          <p>Artisans du BTP, entrepreneurs, maîtres d'œuvre, particuliers et professionnels cherchant des prestataires.</p>
+          <div class="platform-divider"></div>
+          <h3>Modules clés</h3>
+          <ul class="platform-check-list">
+            <li>Formulaire de demande</li>
+            <li>Générateur de devis</li>
+            <li>Historique et relances</li>
+            <li>Annuaire prestataires</li>
+          </ul>
+          <div class="platform-divider"></div>
+          <div class="platform-connect-note">
+            <strong>Connexion future</strong>
+            <span>L'application complète sera développée dans un projet séparé. Cette page servira de point d'entrée vers son URL quand elle sera prête.</span>
+          </div>
+          <a class="btn btn-primary platform-full-button" href="../index.html#contact" data-platform-app-link="devis-btp">Demander l'accès futur</a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- PRODUCT ROADMAP -->
+    <section class="platform-section platform-section-soft">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Chemin produit</p>
+          <h2>Commencer par la qualité des demandes.</h2>
+          <p>La valeur viendra d'abord de demandes mieux structurées, puis d'estimations et connexions plus intelligentes.</p>
+        </div>
+        <div class="platform-roadmap">
+          <article class="platform-roadstep"><span>Étape 1</span><h3>Qualification</h3><p>Capturer les besoins, contraintes, photos, délais et localisation.</p></article>
+          <article class="platform-roadstep"><span>Étape 2</span><h3>Devis guidé</h3><p>Générer des devis cohérents et suivre les réponses commerciales.</p></article>
+          <article class="platform-roadstep"><span>Étape 3</span><h3>Réseau BTP</h3><p>Connecter les professionnels et clients avec des critères utiles.</p></article>
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <!-- PLATFORM CTA -->
+    <section class="platform-section">
       <div class="container">
-        <div class="platform-layout">
+        <div class="platform-cta-strip">
           <div>
-            <h2>Problème résolu</h2>
-            <p>Les professionnels du BTP perdent du temps à créer des devis manuellement et à chercher des clients. Devis BTP centralise les demandes, automatise la création de devis et facilite la mise en relation.</p>
-            <h2 style="margin-top: 40px;">Fonctionnalités</h2>
-            <ul class="feature-list">
-              <li>Générateur de devis intelligent</li>
-              <li>Estimation automatique des coûts</li>
-              <li>Dépôt et consultation de demandes clients</li>
-              <li>Mise en relation professionnels / clients</li>
-              <li>Gestion des statuts et relances</li>
-              <li>Historique et suivi des devis</li>
-            </ul>
+            <h2>Un devis plus clair commence par une meilleure demande.</h2>
+            <p>Cette page reste la vitrine de Devis BTP; l'application complète sera reliée ici quand elle aura son URL.</p>
           </div>
-          <div class="platform-sidecard">
-            <h3>Public cible</h3>
-            <p>Artisans du BTP, entrepreneurs en construction, maîtres d'œuvre, particuliers et professionnels cherchant des prestataires.</p>
-            <hr style="border: 0; border-top: 1px solid var(--line); margin: 20px 0;" />
-            <h3>Statut</h3>
-            <span class="tag" style="background: rgba(0,140,149,.1); color: var(--teal);">En développement</span>
-            <hr style="border: 0; border-top: 1px solid var(--line); margin: 20px 0;" />
-            <a class="btn btn-primary" href="../index.html#contact" style="width: 100%;">Être informé</a>
+          <div class="platform-cta-actions">
+            <a class="btn btn-light" href="../index.html#contact">Proposer un cas</a>
+            <a class="btn btn-light" href="../index.html#ecosysteme">Voir les plateformes</a>
           </div>
         </div>
       </div>
     </section>
   </main>
 
+  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container footer-inner">
       <div>
@@ -84,21 +190,21 @@
           <img src="../assets/logo-mark.svg" alt="" class="brand-mark" loading="lazy" />
           <span class="brand-text"><strong>SYNKORA</strong><small>GROUP</small></span>
         </a>
-        <p style="margin-top: 10px;">Créer. Connecter. Évoluer.</p>
+        <p class="footer-tagline">Créer. Connecter. Évoluer.</p>
       </div>
       <p>© <span data-year></span> Synkora Group. Tous droits réservés.</p>
-      <div class="footer-links" style="flex-direction: column; gap: 8px; align-items: flex-end;">
+      <div class="footer-links footer-links-stack">
         <a href="../index.html#ecosysteme">Plateformes</a>
-        <a href="../pages/apropos.html">À propos</a>
+        <a href="apropos.html">À propos</a>
         <a href="../index.html#contact">Contact</a>
-        <a href="../pages/mentions-legales.html">Mentions légales</a>
-        <a href="../pages/confidentialite.html">Confidentialité</a>
-        <a href="../pages/cgu.html">CGU</a>
-        <a href="../pages/cookies.html">Cookies</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="confidentialite.html">Confidentialité</a>
+        <a href="cgu.html">CGU</a>
+        <a href="cookies.html">Cookies</a>
       </div>
     </div>
   </footer>
 
-  <script src="../js/app.js"></script>
+  <script src="../js/app.js?v=20260610f"></script>
 </body>
 </html>
