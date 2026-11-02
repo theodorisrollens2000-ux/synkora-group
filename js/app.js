@@ -391,7 +391,9 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     const button = el('button', 'team-collaborator');
     button.type = 'button';
     button.setAttribute('aria-haspopup', 'dialog');
-    button.append(avatar(person, 'sm'), el('span', '', clean(person.name)));
+    const text = el('span', 'team-collaborator-text');
+    text.append(el('span', '', clean(person.name)));
+    button.append(avatar(person, 'sm'), text);
     button.addEventListener('click', () => openProfile(person));
     item.append(button);
     return item;
@@ -428,7 +430,7 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
         const list = el('ul', 'team-collaborators');
         board.forEach((person) => {
           const item = collaborator(person);
-          if (clean(person.title)) item.firstChild.append(el('small', '', clean(person.title)));
+          if (clean(person.title)) item.querySelector('.team-collaborator-text').append(el('small', '', clean(person.title)));
           list.append(item);
         });
         directionWrap.append(list);
