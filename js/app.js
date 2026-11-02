@@ -314,23 +314,39 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
 
   const initials = (name) => name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0].toUpperCase()).join('');
 
-  const avatar = (person, size) => {
+  /* Portrait : la photo si elle existe, sinon un monogramme sur un dégradé propre à chaque nom. */
+  const TONES = [
+    ['#0f2a47', '#0f9b9a'],
+    ['#10233f', '#1d4e75'],
+    ['#123c4a', '#20b8ad'],
+    ['#1c2a3d', '#5f6f83'],
+    ['#0e3b3a', '#2f9e6d']
+  ];
+  const toneFor = (name) => TONES[[...name].reduce((sum, char) => sum + char.charCodeAt(0), 0) % TONES.length];
+
+  const portrait = (person, className) => {
+    const name = clean(person.name);
     const photo = clean(person.photo);
-    const wrap = el('div', `team-avatar team-avatar-${size}`);
+    const wrap = el('span', className);
     if (photo) {
       const img = el('img');
       img.src = photo;
       img.alt = '';
       img.loading = 'lazy';
+      img.decoding = 'async';
       wrap.append(img);
     } else {
-      wrap.textContent = initials(clean(person.name));
-      wrap.setAttribute('aria-hidden', 'true');
+      const [from, to] = toneFor(name);
+      wrap.style.setProperty('--tone-a', from);
+      wrap.style.setProperty('--tone-b', to);
+      wrap.classList.add('is-monogram');
+      wrap.append(el('span', 'tp-monogram', initials(name)));
     }
+    wrap.setAttribute('aria-hidden', 'true');
     return wrap;
   };
 
-  /* Fiche d'une personne : photo, fonction, formations et parcours. */
+  /* Fiche d'une personne : portrait, fonction, présentation, formations et parcours. */
   const dialog = document.querySelector('[data-team-profile]');
   const entries = (list, primary, secondary, third) => (Array.isArray(list) ? list : [])
     .map((item) => [clean(item && item[primary]), clean(item && item[secondary]), clean(item && item[third])])
@@ -341,77 +357,91 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     const body = dialog.querySelector('[data-team-profile-body]');
     body.replaceChildren();
 
-    const head = el('div', 'team-profile-head');
-    const titles = el('div');
-    titles.append(el('h2', '', clean(person.name)));
-    if (clean(person.title)) titles.append(el('p', 'team-person-title', clean(person.title)));
-    head.append(avatar(person, 'xl'), titles);
+    body.append(portrait(person, 'tp-profile-portrait'));
+    const head = el('div', 'tp-profile-head');
+    head.append(el('h2', '', clean(person.name)));
+    if (clean(person.title)) head.append(el('p', 'tp-profile-title', clean(person.title)));
     body.append(head);
 
-    if (clean(person.bio) || clean(person.focus)) body.append(el('p', 'team-profile-bio', clean(person.bio) || clean(person.focus)));
+    const intro = clean(person.bio) || clean(person.focus);
+    if (intro) body.append(el('p', 'tp-profile-bio', intro));
 
     [['Formations', entries(person.education, 'title', 'school', 'year')],
       ['Parcours', entries(person.career, 'title', 'org', 'period')]].forEach(([label, items]) => {
       if (!items.length) return;
-      body.append(el('h3', 'team-profile-label', label));
-      const list = el('ul', 'team-profile-list');
+      const block = el('section', 'tp-profile-block');
+      block.append(el('h3', '', label));
+      const list = el('ol', 'tp-timeline');
       items.forEach(([main, place, when]) => {
         const item = el('li');
-        item.append(el('strong', '', main));
-        const meta = [place, when].filter(Boolean).join(' · ');
-        if (meta) item.append(el('span', '', meta));
+        item.append(el('span', 'tp-when', when || ''));
+        const what = el('div');
+        what.append(el('strong', '', main));
+        if (place) what.append(el('span', '', place));
+        item.append(what);
         list.append(item);
       });
-      body.append(list);
+      block.append(list);
+      body.append(block);
     });
 
     dialog.showModal();
+    dialog.scrollTop = 0;
   };
 
   if (dialog) {
-    dialog.querySelector('[data-team-profile-close]').addEventListener('click', () => dialog.close());
-    dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+    const close = () => {
+      dialog.classList.add('is-closing');
+      window.setTimeout(() => { dialog.classList.remove('is-closing'); dialog.close(); }, 220);
+    };
+    dialog.querySelector('[data-team-profile-close]').addEventListener('click', close);
+    dialog.addEventListener('click', (event) => { if (event.target === dialog) close(); });
+    dialog.addEventListener('cancel', (event) => { event.preventDefault(); close(); });
   }
 
-  const personCard = (person) => {
-    const card = el('button', 'team-person');
+  /* Carte portrait : grande image, nom et fonction dessous. */
+  const personCard = (person, size) => {
+    const card = el('button', `tp-card tp-card-${size}`);
     card.type = 'button';
     card.setAttribute('aria-haspopup', 'dialog');
-    const info = el('span', 'team-person-info');
-    info.append(el('strong', 'team-person-name', clean(person.name)));
-    if (clean(person.title)) info.append(el('span', 'team-person-title', clean(person.title)));
-    if (clean(person.focus)) info.append(el('span', 'team-person-focus', clean(person.focus)));
-    card.append(avatar(person, 'lg'), info);
+    card.append(portrait(person, 'tp-portrait'));
+    const meta = el('span', 'tp-meta');
+    meta.append(el('strong', 'tp-name', clean(person.name)));
+    if (clean(person.title)) meta.append(el('span', 'tp-title', clean(person.title)));
+    card.append(meta);
     card.addEventListener('click', () => openProfile(person));
     return card;
   };
 
-  const collaborator = (person) => {
+  /* Membre sans titre : nom seul, cliquable. */
+  const memberItem = (person, withTitle) => {
     const item = el('li');
-    const button = el('button', 'team-collaborator');
+    const button = el('button', 'tp-member');
     button.type = 'button';
     button.setAttribute('aria-haspopup', 'dialog');
-    const text = el('span', 'team-collaborator-text');
+    button.append(portrait(person, 'tp-dot'));
+    const text = el('span', 'tp-member-text');
     text.append(el('span', '', clean(person.name)));
-    button.append(avatar(person, 'sm'), text);
+    if (withTitle && clean(person.title)) text.append(el('small', '', clean(person.title)));
+    button.append(text);
     button.addEventListener('click', () => openProfile(person));
     item.append(button);
     return item;
   };
 
-  /* Identité légale complète = sous-titre factuel. */
   const legalName = clean(company.name) || 'Synkora Group';
   const hasRegistration = clean(company.legalForm) && clean(company.registeredIn) && clean(company.registration);
 
   const section = document.querySelector('[data-team]');
-  if (section) {
-    const direction = named(team.direction);
-    const board = named(team.board);
-    const areas = (Array.isArray(team.areas) ? team.areas : [])
-      .filter((area) => area && clean(area.id) && clean(area.label))
-      .map((area) => ({ ...area, people: named(area.people) }));
-    const areasWithPeople = areas.filter((area) => area.people.length);
+  const direction = named(team.direction);
+  const board = named(team.board);
+  const areas = (Array.isArray(team.areas) ? team.areas : [])
+    .filter((area) => area && clean(area.id) && clean(area.label))
+    .map((area) => ({ ...area, people: named(area.people) }));
+  const areasWithPeople = areas.filter((area) => area.people.length);
+  const anyone = direction.length || board.length || areasWithPeople.length;
 
+  if (section) {
     const legalLine = section.querySelector('[data-team-legal]');
     if (legalLine && hasRegistration) {
       legalLine.textContent = `${legalName}, société ${clean(company.legalForm)} immatriculée ${clean(company.registeredIn)} sous le numéro ${clean(company.registration)}.`;
@@ -421,19 +451,17 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     const directionWrap = section.querySelector('[data-team-direction]');
     if (directionWrap && (direction.length || board.length)) {
       if (direction.length) {
-        const grid = el('div', 'team-direction-grid');
-        direction.forEach((person) => grid.append(personCard(person)));
+        const grid = el('div', 'tp-grid tp-grid-direction');
+        direction.forEach((person) => grid.append(personCard(person, 'lg')));
         directionWrap.append(grid);
       }
       if (board.length) {
-        directionWrap.append(el('h3', 'team-board-title', 'Conseil'));
-        const list = el('ul', 'team-collaborators');
-        board.forEach((person) => {
-          const item = collaborator(person);
-          if (clean(person.title)) item.querySelector('.team-collaborator-text').append(el('small', '', clean(person.title)));
-          list.append(item);
-        });
-        directionWrap.append(list);
+        const boardWrap = el('div', 'tp-board');
+        boardWrap.append(el('h3', 'tp-label', 'Conseil'));
+        const list = el('ul', 'tp-members');
+        board.forEach((person) => list.append(memberItem(person, true)));
+        boardWrap.append(list);
+        directionWrap.append(boardWrap);
       }
       directionWrap.hidden = false;
     }
@@ -453,12 +481,14 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
       };
 
       areas.forEach((area, index) => {
-        const tab = el('button', 'team-tab', clean(area.label));
+        const tab = el('button', 'team-tab');
         tab.type = 'button';
         tab.setAttribute('role', 'tab');
         tab.id = `team-tab-${area.id}`;
         tab.dataset.area = area.id;
         tab.setAttribute('aria-controls', `team-panel-${area.id}`);
+        tab.append(el('span', '', clean(area.label)));
+        if (area.people.length) tab.append(el('span', 'tp-count', String(area.people.length)));
         tab.addEventListener('click', () => select(area.id));
         tab.addEventListener('keydown', (event) => {
           if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
@@ -474,17 +504,17 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
         panel.id = `team-panel-${area.id}`;
         panel.dataset.area = area.id;
         panel.setAttribute('aria-labelledby', tab.id);
-        if (clean(area.description)) panel.append(el('p', 'team-panel-desc', clean(area.description)));
+        if (clean(area.description)) panel.append(el('p', 'tp-area-desc', clean(area.description)));
         const leads = area.people.filter((person) => person.lead);
         const others = area.people.filter((person) => !person.lead);
         if (leads.length) {
-          const grid = el('div', 'team-grid-people');
-          leads.forEach((person) => grid.append(personCard(person)));
+          const grid = el('div', 'tp-grid');
+          leads.forEach((person) => grid.append(personCard(person, 'md')));
           panel.append(grid);
         }
         if (others.length) {
-          const list = el('ul', 'team-collaborators');
-          others.forEach((person) => list.append(collaborator(person)));
+          const list = el('ul', 'tp-members');
+          others.forEach((person) => list.append(memberItem(person, false)));
           panel.append(list);
         }
         panels.append(panel);
@@ -494,14 +524,11 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
       areasWrap.hidden = false;
     }
 
-    const hasPeople = direction.length || board.length || areasWithPeople.length;
-    section.hidden = !hasPeople;
-    if (hasPeople) section.querySelectorAll('.reveal').forEach((node) => node.classList.add('is-visible'));
+    section.hidden = !anyone;
+    if (anyone) section.querySelectorAll('.reveal').forEach((node) => node.classList.add('is-visible'));
   }
 
   /* Liens « Équipe » masqués tant qu'aucune personne n'est nommée. */
-  const anyone = named(team.direction).length || named(team.board).length
-    || (Array.isArray(team.areas) && team.areas.some((area) => named(area && area.people).length));
   if (!anyone) {
     document.querySelectorAll('a[href="#equipes"], a[href$="index.html#equipes"]').forEach((link) => { link.hidden = true; });
   }
