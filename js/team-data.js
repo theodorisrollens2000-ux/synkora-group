@@ -7,15 +7,10 @@
  * - immatriculation absente -> pas de sous-titre ni de bloc légal en bas de page.
  *
  * Personne : {
- *   name: 'Prénom Nom',              // nom complet
- *   title: 'Directeur général',      // fonction telle qu'elle figure dans la résolution de nomination
- *   focus: 'Une ligne sur ce qu'elle porte.',
+ *   name: 'Prénom Nom',                  // nom complet
+ *   title: 'Directeur général',          // fonction
  *   photo: 'assets/team/prenom-nom.jpg', // facultatif : sinon les initiales
- *   lead: true,                      // responsable : carte complète ; sinon nom seul, sans titre
- *   // Fiche ouverte au clic (tout est facultatif) :
- *   bio: 'Deux ou trois phrases.',
- *   education: [{ title: 'Master informatique', school: 'Université …', year: '2022' }],
- *   career: [{ title: 'Développeur', org: 'Entreprise …', period: '2022 – 2025' }]
+ *   bio: 'Quelques lignes de présentation.' // affichées au clic ; ligne vide = nouveau paragraphe
  * }
  */
 window.SYNKORA_COMPANY = {
@@ -28,11 +23,9 @@ window.SYNKORA_COMPANY = {
 };
 
 window.SYNKORA_TEAM = {
-  // Bloc au-dessus des onglets : directeur général.
-  direction: [],
-  // Conseil, s'il existe.
-  board: [],
-  // Quatre onglets, toujours affichés (la description apparaît sous l'onglet).
+  // Premier onglet : la Direction (le directeur général en premier).
+  leadership: [],
+  // Onglets suivants : un par pôle, avec ses membres.
   areas: [
     { id: 'produit', label: 'Produit et ingénierie', description: 'Conception, design et développement des plateformes.', people: [] },
     { id: 'croissance', label: 'Croissance', description: 'Acquisition, partenariats et relation client.', people: [] },

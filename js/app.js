@@ -315,15 +315,6 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
   const initials = (name) => name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0].toUpperCase()).join('');
 
   /* Portrait : la photo si elle existe, sinon un monogramme sur un dégradé propre à chaque nom. */
-  const TONES = [
-    ['#0f2a47', '#0f9b9a'],
-    ['#10233f', '#1d4e75'],
-    ['#123c4a', '#20b8ad'],
-    ['#1c2a3d', '#5f6f83'],
-    ['#0e3b3a', '#2f9e6d']
-  ];
-  const toneFor = (name) => TONES[[...name].reduce((sum, char) => sum + char.charCodeAt(0), 0) % TONES.length];
-
   const portrait = (person, className) => {
     const name = clean(person.name);
     const photo = clean(person.photo);
@@ -336,9 +327,6 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
       img.decoding = 'async';
       wrap.append(img);
     } else {
-      const [from, to] = toneFor(name);
-      wrap.style.setProperty('--tone-a', from);
-      wrap.style.setProperty('--tone-b', to);
       wrap.classList.add('is-monogram');
       wrap.append(el('span', 'tp-monogram', initials(name)));
     }
@@ -346,44 +334,25 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     return wrap;
   };
 
-  /* Fiche d'une personne : portrait, fonction, présentation, formations et parcours. */
+  /* Fiche d'une personne : photo, nom, fonction, pôle et quelques lignes de présentation. */
   const dialog = document.querySelector('[data-team-profile]');
-  const entries = (list, primary, secondary, third) => (Array.isArray(list) ? list : [])
-    .map((item) => [clean(item && item[primary]), clean(item && item[secondary]), clean(item && item[third])])
-    .filter(([main]) => main);
 
-  const openProfile = (person) => {
+  const openProfile = (person, groupLabel) => {
     if (!dialog || typeof dialog.showModal !== 'function') return;
     const body = dialog.querySelector('[data-team-profile-body]');
     body.replaceChildren();
 
-    body.append(portrait(person, 'tp-profile-portrait'));
-    const head = el('div', 'tp-profile-head');
-    head.append(el('h2', '', clean(person.name)));
-    if (clean(person.title)) head.append(el('p', 'tp-profile-title', clean(person.title)));
-    body.append(head);
+    body.append(portrait(person, 'tr-profile-photo'));
+    body.append(el('h2', 'tr-profile-name', clean(person.name)));
+    if (clean(person.title)) body.append(el('p', 'tr-profile-title', clean(person.title)));
+    if (groupLabel) body.append(el('p', 'tr-profile-group', groupLabel));
 
-    const intro = clean(person.bio) || clean(person.focus);
-    if (intro) body.append(el('p', 'tp-profile-bio', intro));
-
-    [['Formations', entries(person.education, 'title', 'school', 'year')],
-      ['Parcours', entries(person.career, 'title', 'org', 'period')]].forEach(([label, items]) => {
-      if (!items.length) return;
-      const block = el('section', 'tp-profile-block');
-      block.append(el('h3', '', label));
-      const list = el('ol', 'tp-timeline');
-      items.forEach(([main, place, when]) => {
-        const item = el('li');
-        item.append(el('span', 'tp-when', when || ''));
-        const what = el('div');
-        what.append(el('strong', '', main));
-        if (place) what.append(el('span', '', place));
-        item.append(what);
-        list.append(item);
-      });
-      block.append(list);
-      body.append(block);
-    });
+    const bio = clean(person.bio) || clean(person.focus);
+    if (bio) {
+      const text = el('div', 'tr-profile-bio');
+      bio.split(/\n\s*\n/).map((part) => part.trim()).filter(Boolean).forEach((part) => text.append(el('p', '', part)));
+      body.append(text);
+    }
 
     dialog.showModal();
     dialog.scrollTop = 0;
@@ -399,47 +368,31 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     dialog.addEventListener('cancel', (event) => { event.preventDefault(); close(); });
   }
 
-  /* Carte portrait : grande image, nom et fonction dessous. */
-  const personCard = (person, size) => {
-    const card = el('button', `tp-card tp-card-${size}`);
+  /* Personne : photo ronde, nom et fonction centrés, sans cadre. */
+  const personCard = (person, groupLabel) => {
+    const card = el('button', 'tr-person');
     card.type = 'button';
     card.setAttribute('aria-haspopup', 'dialog');
-    card.append(portrait(person, 'tp-portrait'));
-    const meta = el('span', 'tp-meta');
-    meta.append(el('strong', 'tp-name', clean(person.name)));
-    if (clean(person.title)) meta.append(el('span', 'tp-title', clean(person.title)));
-    card.append(meta);
-    card.addEventListener('click', () => openProfile(person));
+    card.append(portrait(person, 'tr-photo'));
+    card.append(el('strong', 'tr-name', clean(person.name)));
+    if (clean(person.title)) card.append(el('span', 'tr-title', clean(person.title)));
+    card.addEventListener('click', () => openProfile(person, groupLabel));
     return card;
   };
 
-  /* Membre sans titre : nom seul, cliquable. */
-  const memberItem = (person, withTitle) => {
-    const item = el('li');
-    const button = el('button', 'tp-member');
-    button.type = 'button';
-    button.setAttribute('aria-haspopup', 'dialog');
-    button.append(portrait(person, 'tp-dot'));
-    const text = el('span', 'tp-member-text');
-    text.append(el('span', '', clean(person.name)));
-    if (withTitle && clean(person.title)) text.append(el('small', '', clean(person.title)));
-    button.append(text);
-    button.addEventListener('click', () => openProfile(person));
-    item.append(button);
-    return item;
-  };
+  /* Rangées équilibrées : 5 personnes = 3 + 2 (4 par ligne au plus). */
+  const balancedColumns = (count, max) => Math.ceil(count / Math.ceil(count / max));
 
   const legalName = clean(company.name) || 'Synkora Group';
   const hasRegistration = clean(company.legalForm) && clean(company.registeredIn) && clean(company.registration);
 
   const section = document.querySelector('[data-team]');
-  const direction = named(team.direction);
-  const board = named(team.board);
-  const areas = (Array.isArray(team.areas) ? team.areas : [])
-    .filter((area) => area && clean(area.id) && clean(area.label))
-    .map((area) => ({ ...area, people: named(area.people) }));
-  const areasWithPeople = areas.filter((area) => area.people.length);
-  const anyone = direction.length || board.length || areasWithPeople.length;
+  const groups = [{ id: 'direction', label: 'Direction', description: '', people: named(team.leadership) }]
+    .concat((Array.isArray(team.areas) ? team.areas : [])
+      .filter((area) => area && clean(area.id) && clean(area.label))
+      .map((area) => ({ id: clean(area.id), label: clean(area.label), description: clean(area.description), people: named(area.people), always: true })))
+    .filter((group) => group.always || group.people.length);
+  const anyone = groups.some((group) => group.people.length);
 
   if (section) {
     const legalLine = section.querySelector('[data-team-legal]');
@@ -447,81 +400,57 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
       legalLine.textContent = `${legalName}, société ${clean(company.legalForm)} immatriculée ${clean(company.registeredIn)} sous le numéro ${clean(company.registration)}.`;
       legalLine.hidden = false;
     }
+    const root = section.querySelector('[data-team-root]');
 
-    const directionWrap = section.querySelector('[data-team-direction]');
-    if (directionWrap && (direction.length || board.length)) {
-      if (direction.length) {
-        const grid = el('div', 'tp-grid tp-grid-direction');
-        direction.forEach((person) => grid.append(personCard(person, 'lg')));
-        directionWrap.append(grid);
-      }
-      if (board.length) {
-        const boardWrap = el('div', 'tp-board');
-        boardWrap.append(el('h3', 'tp-label', 'Conseil'));
-        const list = el('ul', 'tp-members');
-        board.forEach((person) => list.append(memberItem(person, true)));
-        boardWrap.append(list);
-        directionWrap.append(boardWrap);
-      }
-      directionWrap.hidden = false;
-    }
+    if (anyone) {
+      const tabs = el('div', 'team-tabs tr-tabs');
+      tabs.setAttribute('role', 'tablist');
+      tabs.setAttribute('aria-label', 'Équipes');
+      const panels = el('div', 'tr-panels');
 
-    const areasWrap = section.querySelector('[data-team-areas]');
-    const tabs = section.querySelector('[data-team-tabs]');
-    const panels = section.querySelector('[data-team-panels]');
-    if (areasWrap && tabs && panels && areas.length) {
       const select = (id) => {
         tabs.querySelectorAll('[role="tab"]').forEach((tab) => {
-          const active = tab.dataset.area === id;
+          const active = tab.dataset.group === id;
           tab.classList.toggle('is-active', active);
           tab.setAttribute('aria-selected', String(active));
           tab.tabIndex = active ? 0 : -1;
         });
-        panels.querySelectorAll('[role="tabpanel"]').forEach((panel) => { panel.hidden = panel.dataset.area !== id; });
+        panels.querySelectorAll('[role="tabpanel"]').forEach((panel) => { panel.hidden = panel.dataset.group !== id; });
       };
 
-      areas.forEach((area, index) => {
+      groups.forEach((group, index) => {
         const tab = el('button', 'team-tab');
         tab.type = 'button';
         tab.setAttribute('role', 'tab');
-        tab.id = `team-tab-${area.id}`;
-        tab.dataset.area = area.id;
-        tab.setAttribute('aria-controls', `team-panel-${area.id}`);
-        tab.append(el('span', '', clean(area.label)));
-        if (area.people.length) tab.append(el('span', 'tp-count', String(area.people.length)));
-        tab.addEventListener('click', () => select(area.id));
+        tab.id = `team-tab-${group.id}`;
+        tab.dataset.group = group.id;
+        tab.setAttribute('aria-controls', `team-panel-${group.id}`);
+        tab.append(el('span', '', group.label));
+        if (group.people.length) tab.append(el('span', 'tp-count', String(group.people.length)));
+        tab.addEventListener('click', () => select(group.id));
         tab.addEventListener('keydown', (event) => {
           if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
-          const step = event.key === 'ArrowRight' ? 1 : -1;
-          const next = areas[(index + step + areas.length) % areas.length];
+          const next = groups[(index + (event.key === 'ArrowRight' ? 1 : -1) + groups.length) % groups.length];
           select(next.id);
-          tabs.querySelector(`[data-area="${next.id}"]`).focus();
+          tabs.querySelector(`[data-group="${next.id}"]`).focus();
         });
         tabs.append(tab);
 
-        const panel = el('div', 'team-panel');
+        const panel = el('div', 'tr-panel');
         panel.setAttribute('role', 'tabpanel');
-        panel.id = `team-panel-${area.id}`;
-        panel.dataset.area = area.id;
+        panel.id = `team-panel-${group.id}`;
+        panel.dataset.group = group.id;
         panel.setAttribute('aria-labelledby', tab.id);
-        if (clean(area.description)) panel.append(el('p', 'tp-area-desc', clean(area.description)));
-        const leads = area.people.filter((person) => person.lead);
-        const others = area.people.filter((person) => !person.lead);
-        if (leads.length) {
-          const grid = el('div', 'tp-grid');
-          leads.forEach((person) => grid.append(personCard(person, 'md')));
-          panel.append(grid);
-        }
-        if (others.length) {
-          const list = el('ul', 'tp-members');
-          others.forEach((person) => list.append(memberItem(person, false)));
-          panel.append(list);
-        }
+        if (group.description) panel.append(el('p', 'tr-desc', group.description));
+        const grid = el('div', 'tr-people');
+        grid.style.setProperty('--cols', String(balancedColumns(Math.max(group.people.length, 1), 4)));
+        group.people.forEach((person) => grid.append(personCard(person, group.label)));
+        panel.append(grid);
         panels.append(panel);
       });
 
-      select((areasWithPeople[0] || areas[0]).id);
-      areasWrap.hidden = false;
+      root.append(tabs, panels);
+      select((groups.find((group) => group.people.length) || groups[0]).id);
     }
 
     section.hidden = !anyone;
