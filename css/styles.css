@@ -2230,3 +2230,50 @@ h3 { font-size: 1.3rem; }
   h1 { font-size: 2.05rem; }
   .hero-card { padding: 18px; }
 }
+
+/* Cartes fondues : fond translucide, bordure à peine visible, ombre diffuse. */
+:root {
+  --card-fade-bg: linear-gradient(180deg, rgba(255, 255, 255, .78), rgba(255, 255, 255, .42));
+  --card-fade-border: rgba(16, 35, 63, .05);
+  --card-fade-shadow: 0 24px 48px -32px rgba(16, 35, 63, .22);
+}
+
+:root[data-theme="dark"] {
+  --card-fade-bg: linear-gradient(180deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .015));
+  --card-fade-border: rgba(255, 255, 255, .05);
+  --card-fade-shadow: 0 24px 48px -32px rgba(0, 0, 0, .6);
+}
+
+.hero-card,
+.direction-card:not(.direction-card-strong),
+.role-card,
+.blueprint-card:not(.blueprint-card-strong),
+.ops-card:not(.ops-card-warning),
+.stack-card,
+.module-cloud,
+.card,
+.activity-item,
+.team-card,
+.pole-card,
+.partner-card,
+.platform-sidecard,
+.platform-feature-card,
+.platform-roadstep,
+.roadmap-item,
+.blog-card,
+.value-card,
+.contact-cards div,
+.contact-form,
+.architecture-fold summary {
+  background: var(--card-fade-bg);
+  border-color: var(--card-fade-border);
+  box-shadow: var(--card-fade-shadow);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.console-metrics div,
+.console-list div {
+  background: rgba(127, 145, 170, .06);
+  border-color: transparent;
+}
