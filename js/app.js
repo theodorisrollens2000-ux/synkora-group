@@ -406,8 +406,9 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     const direction = named(team.direction);
     const board = named(team.board);
     const areas = (Array.isArray(team.areas) ? team.areas : [])
-      .map((area) => ({ ...area, people: named(area.people) }))
-      .filter((area) => area.people.length);
+      .filter((area) => area && clean(area.id) && clean(area.label))
+      .map((area) => ({ ...area, people: named(area.people) }));
+    const areasWithPeople = areas.filter((area) => area.people.length);
 
     const legalLine = section.querySelector('[data-team-legal]');
     if (legalLine && hasRegistration) {
@@ -471,6 +472,7 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
         panel.id = `team-panel-${area.id}`;
         panel.dataset.area = area.id;
         panel.setAttribute('aria-labelledby', tab.id);
+        if (clean(area.description)) panel.append(el('p', 'team-panel-desc', clean(area.description)));
         const leads = area.people.filter((person) => person.lead);
         const others = area.people.filter((person) => !person.lead);
         if (leads.length) {
@@ -486,11 +488,11 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
         panels.append(panel);
       });
 
-      select(areas[0].id);
+      select((areasWithPeople[0] || areas[0]).id);
       areasWrap.hidden = false;
     }
 
-    const hasPeople = direction.length || board.length || areas.length;
+    const hasPeople = direction.length || board.length || areasWithPeople.length;
     section.hidden = !hasPeople;
     if (hasPeople) section.querySelectorAll('.reveal').forEach((node) => node.classList.add('is-visible'));
   }

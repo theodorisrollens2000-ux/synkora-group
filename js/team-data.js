@@ -32,11 +32,11 @@ window.SYNKORA_TEAM = {
   direction: [],
   // Conseil, s'il existe.
   board: [],
-  // Quatre onglets.
+  // Quatre onglets, toujours affichés (la description apparaît sous l'onglet).
   areas: [
-    { id: 'produit', label: 'Produit et ingénierie', people: [] },
-    { id: 'croissance', label: 'Croissance', people: [] },
-    { id: 'operations', label: 'Opérations et finances', people: [] },
-    { id: 'juridique', label: 'Juridique et conformité', people: [] }
+    { id: 'produit', label: 'Produit et ingénierie', description: 'Conception, design et développement des plateformes.', people: [] },
+    { id: 'croissance', label: 'Croissance', description: 'Acquisition, partenariats et relation client.', people: [] },
+    { id: 'operations', label: 'Opérations et finances', description: 'Organisation, budget et suivi de l’activité.', people: [] },
+    { id: 'juridique', label: 'Juridique et conformité', description: 'Contrats, données personnelles et obligations légales.', people: [] }
   ]
 };
