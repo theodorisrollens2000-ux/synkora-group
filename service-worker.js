@@ -1,4 +1,4 @@
-const CACHE_NAME = 'synkora-site-v15';
+const CACHE_NAME = 'synkora-site-v16';
 const OFFLINE_URL = './offline.html';
 
 /* Core app shell: files needed for first paint and offline navigation. */
@@ -7,8 +7,9 @@ const CORE_ASSETS = [
   './index.html',
   OFFLINE_URL,
   './site.webmanifest',
-  './css/styles.css?v=20260611d',
-  './js/app.js?v=20260611d',
+  './css/styles.css?v=20261102',
+  './js/team-data.js?v=20261102',
+  './js/app.js?v=20261102',
   './assets/favicon.svg',
   './assets/icon-192.png',
   './assets/icon-512.png',

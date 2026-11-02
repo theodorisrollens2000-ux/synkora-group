@@ -297,3 +297,229 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     navigator.serviceWorker.register(workerUrl.href).catch(() => {});
   });
 }
+
+/* Équipe et identité légale : rendues depuis js/team-data.js, rien n'apparaît tant que c'est vide. */
+(() => {
+  const company = window.SYNKORA_COMPANY || {};
+  const team = window.SYNKORA_TEAM || {};
+  const clean = (value) => (typeof value === 'string' ? value.trim() : '');
+  const named = (list) => (Array.isArray(list) ? list.filter((person) => person && clean(person.name)) : []);
+
+  const el = (tag, className, text) => {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text) node.textContent = text;
+    return node;
+  };
+
+  const initials = (name) => name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0].toUpperCase()).join('');
+
+  const avatar = (person, size) => {
+    const photo = clean(person.photo);
+    const wrap = el('div', `team-avatar team-avatar-${size}`);
+    if (photo) {
+      const img = el('img');
+      img.src = photo;
+      img.alt = '';
+      img.loading = 'lazy';
+      wrap.append(img);
+    } else {
+      wrap.textContent = initials(clean(person.name));
+      wrap.setAttribute('aria-hidden', 'true');
+    }
+    return wrap;
+  };
+
+  /* Fiche d'une personne : photo, fonction, formations et parcours. */
+  const dialog = document.querySelector('[data-team-profile]');
+  const entries = (list, primary, secondary, third) => (Array.isArray(list) ? list : [])
+    .map((item) => [clean(item && item[primary]), clean(item && item[secondary]), clean(item && item[third])])
+    .filter(([main]) => main);
+
+  const openProfile = (person) => {
+    if (!dialog || typeof dialog.showModal !== 'function') return;
+    const body = dialog.querySelector('[data-team-profile-body]');
+    body.replaceChildren();
+
+    const head = el('div', 'team-profile-head');
+    const titles = el('div');
+    titles.append(el('h2', '', clean(person.name)));
+    if (clean(person.title)) titles.append(el('p', 'team-person-title', clean(person.title)));
+    head.append(avatar(person, 'xl'), titles);
+    body.append(head);
+
+    if (clean(person.bio) || clean(person.focus)) body.append(el('p', 'team-profile-bio', clean(person.bio) || clean(person.focus)));
+
+    [['Formations', entries(person.education, 'title', 'school', 'year')],
+      ['Parcours', entries(person.career, 'title', 'org', 'period')]].forEach(([label, items]) => {
+      if (!items.length) return;
+      body.append(el('h3', 'team-profile-label', label));
+      const list = el('ul', 'team-profile-list');
+      items.forEach(([main, place, when]) => {
+        const item = el('li');
+        item.append(el('strong', '', main));
+        const meta = [place, when].filter(Boolean).join(' · ');
+        if (meta) item.append(el('span', '', meta));
+        list.append(item);
+      });
+      body.append(list);
+    });
+
+    dialog.showModal();
+  };
+
+  if (dialog) {
+    dialog.querySelector('[data-team-profile-close]').addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+  }
+
+  const personCard = (person) => {
+    const card = el('button', 'team-person');
+    card.type = 'button';
+    card.setAttribute('aria-haspopup', 'dialog');
+    const info = el('span', 'team-person-info');
+    info.append(el('strong', 'team-person-name', clean(person.name)));
+    if (clean(person.title)) info.append(el('span', 'team-person-title', clean(person.title)));
+    if (clean(person.focus)) info.append(el('span', 'team-person-focus', clean(person.focus)));
+    card.append(avatar(person, 'lg'), info);
+    card.addEventListener('click', () => openProfile(person));
+    return card;
+  };
+
+  const collaborator = (person) => {
+    const item = el('li');
+    const button = el('button', 'team-collaborator');
+    button.type = 'button';
+    button.setAttribute('aria-haspopup', 'dialog');
+    button.append(avatar(person, 'sm'), el('span', '', clean(person.name)));
+    button.addEventListener('click', () => openProfile(person));
+    item.append(button);
+    return item;
+  };
+
+  /* Identité légale complète = sous-titre factuel. */
+  const legalName = clean(company.name) || 'Synkora Group';
+  const hasRegistration = clean(company.legalForm) && clean(company.registeredIn) && clean(company.registration);
+
+  const section = document.querySelector('[data-team]');
+  if (section) {
+    const direction = named(team.direction);
+    const board = named(team.board);
+    const areas = (Array.isArray(team.areas) ? team.areas : [])
+      .map((area) => ({ ...area, people: named(area.people) }))
+      .filter((area) => area.people.length);
+
+    const legalLine = section.querySelector('[data-team-legal]');
+    if (legalLine && hasRegistration) {
+      legalLine.textContent = `${legalName}, société ${clean(company.legalForm)} immatriculée ${clean(company.registeredIn)} sous le numéro ${clean(company.registration)}.`;
+      legalLine.hidden = false;
+    }
+
+    const directionWrap = section.querySelector('[data-team-direction]');
+    if (directionWrap && (direction.length || board.length)) {
+      if (direction.length) {
+        const grid = el('div', 'team-direction-grid');
+        direction.forEach((person) => grid.append(personCard(person)));
+        directionWrap.append(grid);
+      }
+      if (board.length) {
+        directionWrap.append(el('h3', 'team-board-title', 'Conseil'));
+        const list = el('ul', 'team-collaborators');
+        board.forEach((person) => {
+          const item = collaborator(person);
+          if (clean(person.title)) item.firstChild.append(el('small', '', clean(person.title)));
+          list.append(item);
+        });
+        directionWrap.append(list);
+      }
+      directionWrap.hidden = false;
+    }
+
+    const areasWrap = section.querySelector('[data-team-areas]');
+    const tabs = section.querySelector('[data-team-tabs]');
+    const panels = section.querySelector('[data-team-panels]');
+    if (areasWrap && tabs && panels && areas.length) {
+      const select = (id) => {
+        tabs.querySelectorAll('[role="tab"]').forEach((tab) => {
+          const active = tab.dataset.area === id;
+          tab.classList.toggle('is-active', active);
+          tab.setAttribute('aria-selected', String(active));
+          tab.tabIndex = active ? 0 : -1;
+        });
+        panels.querySelectorAll('[role="tabpanel"]').forEach((panel) => { panel.hidden = panel.dataset.area !== id; });
+      };
+
+      areas.forEach((area, index) => {
+        const tab = el('button', 'team-tab', clean(area.label));
+        tab.type = 'button';
+        tab.setAttribute('role', 'tab');
+        tab.id = `team-tab-${area.id}`;
+        tab.dataset.area = area.id;
+        tab.setAttribute('aria-controls', `team-panel-${area.id}`);
+        tab.addEventListener('click', () => select(area.id));
+        tab.addEventListener('keydown', (event) => {
+          if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+          const step = event.key === 'ArrowRight' ? 1 : -1;
+          const next = areas[(index + step + areas.length) % areas.length];
+          select(next.id);
+          tabs.querySelector(`[data-area="${next.id}"]`).focus();
+        });
+        tabs.append(tab);
+
+        const panel = el('div', 'team-panel');
+        panel.setAttribute('role', 'tabpanel');
+        panel.id = `team-panel-${area.id}`;
+        panel.dataset.area = area.id;
+        panel.setAttribute('aria-labelledby', tab.id);
+        const leads = area.people.filter((person) => person.lead);
+        const others = area.people.filter((person) => !person.lead);
+        if (leads.length) {
+          const grid = el('div', 'team-grid-people');
+          leads.forEach((person) => grid.append(personCard(person)));
+          panel.append(grid);
+        }
+        if (others.length) {
+          const list = el('ul', 'team-collaborators');
+          others.forEach((person) => list.append(collaborator(person)));
+          panel.append(list);
+        }
+        panels.append(panel);
+      });
+
+      select(areas[0].id);
+      areasWrap.hidden = false;
+    }
+
+    const hasPeople = direction.length || board.length || areas.length;
+    section.hidden = !hasPeople;
+    if (hasPeople) section.querySelectorAll('.reveal').forEach((node) => node.classList.add('is-visible'));
+  }
+
+  /* Liens « Équipe » masqués tant qu'aucune personne n'est nommée. */
+  const anyone = named(team.direction).length || named(team.board).length
+    || (Array.isArray(team.areas) && team.areas.some((area) => named(area && area.people).length));
+  if (!anyone) {
+    document.querySelectorAll('a[href="#equipes"], a[href$="index.html#equipes"]').forEach((link) => { link.hidden = true; });
+  }
+
+  /* Bloc légal en bas de page : seulement les champs renseignés. */
+  const footer = document.querySelector('.site-footer');
+  const facts = [
+    ['Dénomination', legalName],
+    ['Forme', clean(company.legalForm)],
+    ['Pays', clean(company.country)],
+    ["N° d'immatriculation", clean(company.registration)],
+    ['Constitution', clean(company.founded)]
+  ];
+  if (footer && hasRegistration) {
+    const block = el('div', 'container footer-legal');
+    const list = el('dl');
+    facts.filter(([, value]) => value).forEach(([label, value]) => {
+      const row = el('div');
+      row.append(el('dt', '', label), el('dd', '', value));
+      list.append(row);
+    });
+    block.append(list);
+    footer.append(block);
+  }
+})();
