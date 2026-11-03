@@ -297,3 +297,189 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     navigator.serviceWorker.register(workerUrl.href).catch(() => {});
   });
 }
+
+/* Équipe et identité légale : rendues depuis js/team-data.js, rien n'apparaît tant que c'est vide. */
+(() => {
+  const company = window.SYNKORA_COMPANY || {};
+  const team = window.SYNKORA_TEAM || {};
+  const clean = (value) => (typeof value === 'string' ? value.trim() : '');
+  const named = (list) => (Array.isArray(list) ? list.filter((person) => person && clean(person.name)) : []);
+
+  const el = (tag, className, text) => {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text) node.textContent = text;
+    return node;
+  };
+
+  const initials = (name) => name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0].toUpperCase()).join('');
+
+  /* Portrait : la photo si elle existe, sinon un monogramme sur un dégradé propre à chaque nom. */
+  const portrait = (person, className) => {
+    const name = clean(person.name);
+    const photo = clean(person.photo);
+    const wrap = el('span', className);
+    if (photo) {
+      const img = el('img');
+      img.src = photo;
+      img.alt = '';
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      wrap.append(img);
+    } else {
+      wrap.classList.add('is-monogram');
+      wrap.append(el('span', 'tp-monogram', initials(name)));
+    }
+    wrap.setAttribute('aria-hidden', 'true');
+    return wrap;
+  };
+
+  /* Fiche d'une personne : photo, nom, fonction, pôle et quelques lignes de présentation. */
+  const dialog = document.querySelector('[data-team-profile]');
+
+  const openProfile = (person, groupLabel) => {
+    if (!dialog || typeof dialog.showModal !== 'function') return;
+    const body = dialog.querySelector('[data-team-profile-body]');
+    body.replaceChildren();
+
+    body.append(portrait(person, 'tr-profile-photo'));
+    body.append(el('h2', 'tr-profile-name', clean(person.name)));
+    if (clean(person.title)) body.append(el('p', 'tr-profile-title', clean(person.title)));
+    if (groupLabel) body.append(el('p', 'tr-profile-group', groupLabel));
+
+    const bio = clean(person.bio) || clean(person.focus);
+    if (bio) {
+      const text = el('div', 'tr-profile-bio');
+      bio.split(/\n\s*\n/).map((part) => part.trim()).filter(Boolean).forEach((part) => text.append(el('p', '', part)));
+      body.append(text);
+    }
+
+    dialog.showModal();
+    dialog.scrollTop = 0;
+  };
+
+  if (dialog) {
+    const close = () => {
+      dialog.classList.add('is-closing');
+      window.setTimeout(() => { dialog.classList.remove('is-closing'); dialog.close(); }, 220);
+    };
+    dialog.querySelector('[data-team-profile-close]').addEventListener('click', close);
+    dialog.addEventListener('click', (event) => { if (event.target === dialog) close(); });
+    dialog.addEventListener('cancel', (event) => { event.preventDefault(); close(); });
+  }
+
+  /* Personne : photo ronde, nom et fonction centrés, sans cadre. */
+  const personCard = (person, groupLabel) => {
+    const card = el('button', 'tr-person');
+    card.type = 'button';
+    card.setAttribute('aria-haspopup', 'dialog');
+    card.append(portrait(person, 'tr-photo'));
+    card.append(el('strong', 'tr-name', clean(person.name)));
+    if (clean(person.title)) card.append(el('span', 'tr-title', clean(person.title)));
+    card.addEventListener('click', () => openProfile(person, groupLabel));
+    return card;
+  };
+
+  /* Rangées équilibrées : 5 personnes = 3 + 2 (4 par ligne au plus). */
+  const balancedColumns = (count, max) => Math.ceil(count / Math.ceil(count / max));
+
+  const legalName = clean(company.name) || 'Synkora Group';
+  const hasRegistration = clean(company.legalForm) && clean(company.registeredIn) && clean(company.registration);
+
+  const section = document.querySelector('[data-team]');
+  const groups = [{ id: 'direction', label: 'Direction', description: '', people: named(team.leadership) }]
+    .concat((Array.isArray(team.areas) ? team.areas : [])
+      .filter((area) => area && clean(area.id) && clean(area.label))
+      .map((area) => ({ id: clean(area.id), label: clean(area.label), description: clean(area.description), people: named(area.people), always: true })))
+    .filter((group) => group.always || group.people.length);
+  const anyone = groups.some((group) => group.people.length);
+
+  if (section) {
+    const legalLine = section.querySelector('[data-team-legal]');
+    if (legalLine && hasRegistration) {
+      legalLine.textContent = `${legalName}, société ${clean(company.legalForm)} immatriculée ${clean(company.registeredIn)} sous le numéro ${clean(company.registration)}.`;
+      legalLine.hidden = false;
+    }
+    const root = section.querySelector('[data-team-root]');
+
+    if (anyone) {
+      const tabs = el('div', 'team-tabs tr-tabs');
+      tabs.setAttribute('role', 'tablist');
+      tabs.setAttribute('aria-label', 'Équipes');
+      const panels = el('div', 'tr-panels');
+
+      const select = (id) => {
+        tabs.querySelectorAll('[role="tab"]').forEach((tab) => {
+          const active = tab.dataset.group === id;
+          tab.classList.toggle('is-active', active);
+          tab.setAttribute('aria-selected', String(active));
+          tab.tabIndex = active ? 0 : -1;
+        });
+        panels.querySelectorAll('[role="tabpanel"]').forEach((panel) => { panel.hidden = panel.dataset.group !== id; });
+      };
+
+      groups.forEach((group, index) => {
+        const tab = el('button', 'team-tab');
+        tab.type = 'button';
+        tab.setAttribute('role', 'tab');
+        tab.id = `team-tab-${group.id}`;
+        tab.dataset.group = group.id;
+        tab.setAttribute('aria-controls', `team-panel-${group.id}`);
+        tab.append(el('span', '', group.label));
+        if (group.people.length) tab.append(el('span', 'tp-count', String(group.people.length)));
+        tab.addEventListener('click', () => select(group.id));
+        tab.addEventListener('keydown', (event) => {
+          if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+          const next = groups[(index + (event.key === 'ArrowRight' ? 1 : -1) + groups.length) % groups.length];
+          select(next.id);
+          tabs.querySelector(`[data-group="${next.id}"]`).focus();
+        });
+        tabs.append(tab);
+
+        const panel = el('div', 'tr-panel');
+        panel.setAttribute('role', 'tabpanel');
+        panel.id = `team-panel-${group.id}`;
+        panel.dataset.group = group.id;
+        panel.setAttribute('aria-labelledby', tab.id);
+        if (group.description) panel.append(el('p', 'tr-desc', group.description));
+        const grid = el('div', 'tr-people');
+        grid.style.setProperty('--cols', String(balancedColumns(Math.max(group.people.length, 1), 4)));
+        group.people.forEach((person) => grid.append(personCard(person, group.label)));
+        panel.append(grid);
+        panels.append(panel);
+      });
+
+      root.append(tabs, panels);
+      select((groups.find((group) => group.people.length) || groups[0]).id);
+    }
+
+    section.hidden = !anyone;
+    if (anyone) section.querySelectorAll('.reveal').forEach((node) => node.classList.add('is-visible'));
+  }
+
+  /* Liens « Équipe » masqués tant qu'aucune personne n'est nommée. */
+  if (!anyone) {
+    document.querySelectorAll('a[href="#equipes"], a[href$="index.html#equipes"]').forEach((link) => { link.hidden = true; });
+  }
+
+  /* Bloc légal en bas de page : seulement les champs renseignés. */
+  const footer = document.querySelector('.site-footer');
+  const facts = [
+    ['Dénomination', legalName],
+    ['Forme', clean(company.legalForm)],
+    ['Pays', clean(company.country)],
+    ["N° d'immatriculation", clean(company.registration)],
+    ['Constitution', clean(company.founded)]
+  ];
+  if (footer && hasRegistration) {
+    const block = el('div', 'container footer-legal');
+    const list = el('dl');
+    facts.filter(([, value]) => value).forEach(([label, value]) => {
+      const row = el('div');
+      row.append(el('dt', '', label), el('dd', '', value));
+      list.append(row);
+    });
+    block.append(list);
+    footer.append(block);
+  }
+})();

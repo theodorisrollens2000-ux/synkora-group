@@ -30,7 +30,7 @@ Ouvrir `index.html` dans un navigateur ou lancer un serveur statique local.
 
 - Domaine officiel si Synkora Group veut quitter l'URL GitHub Pages.
 - Coordonnées vérifiées : téléphone, adresse, WhatsApp et réseaux sociaux seulement quand ils sont réels.
-- Membres de l'équipe, rôles, photos et biographies seulement après validation.
+- Équipe et identité légale : à remplir dans `js/team-data.js` (rien ne s'affiche tant que c'est vide).
 - Informations administratives complètes dans les mentions légales avant usage commercial officiel.
 - Formulaire connecté à un vrai serveur ou outil d'emailing si vous voulez recevoir les demandes sans passer par `mailto:`.
 
